@@ -10,37 +10,37 @@ return new class extends Migration
     {
         Schema::create('verification_submissions', function (Blueprint $table) {
             $table->id();
-            
+            $table->foreignId('user_id')->nullable();
+
             // Personal Information
             $table->enum('gender', ['male', 'female']);
             $table->date('date_of_birth');
             $table->string('id_number', 10);
-            
+
             // Identity Documents
             $table->string('id_front_path')->nullable();
             $table->string('license_front_path')->nullable();
             $table->date('license_expiry');
-            
+
             // Vehicle Information
             $table->string('vehicle_registration_path')->nullable();
             $table->string('vehicle_sequence_number');
-            
+
             // Verification & Payment
             $table->string('selfie_path')->nullable();
             $table->string('stc_phone', 9);
-            
+
             // Status & Admin
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->text('status')->default('pending');
             $table->text('admin_notes')->nullable();
             $table->timestamp('reviewed_at')->nullable();
             $table->foreignId('reviewed_by')->nullable()->constrained('users');
-            
+
+            $table->text('reviewer_notes')->nullable()->after('admin_notes');
+            $table->text('internal_notes')->nullable()->after('reviewer_notes');
+
             $table->timestamps();
-            
-            // Indexes
-            $table->index('status');
-            $table->index('created_at');
-            $table->index('id_number');
+
         });
     }
 

@@ -62,7 +62,7 @@ class VerificationController extends Controller
 
         ActivityLog::log(
             'approve_submission',
-            "Approved verification submission #{$submission->id} for user {$submission->user->email}",
+            "Approved verification submission #{$submission->id} for user {$submission?->user?->email}",
             ['submission_id' => $submission->id, 'user_id' => $submission->user_id]
         );
 
@@ -91,7 +91,7 @@ class VerificationController extends Controller
             'reject_submission',
             "Rejected verification submission #{$submission->id} for user {$submission->user->email}",
             [
-                'submission_id' => $submission->id, 
+                'submission_id' => $submission->id,
                 'user_id' => $submission->user_id,
                 'reason' => $request->input('notes')
             ]
@@ -103,7 +103,7 @@ class VerificationController extends Controller
     public function markUnderReview(VerificationSubmission $submission)
     {
         $submission->update(['status' => 'under_review']);
-        
+
         ActivityLog::log(
             'review_submission',
             "Marked submission #{$submission->id} as Under Review",
