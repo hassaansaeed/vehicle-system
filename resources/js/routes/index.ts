@@ -293,6 +293,80 @@ home.form = homeForm
 
 /**
 * @see routes/web.php:13
+* @route '/verification'
+*/
+export const verification = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: verification.url(options),
+    method: 'get',
+})
+
+verification.definition = {
+    methods: ["get","head"],
+    url: '/verification',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see routes/web.php:13
+* @route '/verification'
+*/
+verification.url = (options?: RouteQueryOptions) => {
+    return verification.definition.url + queryParams(options)
+}
+
+/**
+* @see routes/web.php:13
+* @route '/verification'
+*/
+verification.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: verification.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:13
+* @route '/verification'
+*/
+verification.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: verification.url(options),
+    method: 'head',
+})
+
+/**
+* @see routes/web.php:13
+* @route '/verification'
+*/
+const verificationForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: verification.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:13
+* @route '/verification'
+*/
+verificationForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: verification.url(options),
+    method: 'get',
+})
+
+/**
+* @see routes/web.php:13
+* @route '/verification'
+*/
+verificationForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: verification.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+verification.form = verificationForm
+
+/**
+* @see routes/web.php:28
 * @route '/dashboard'
 */
 export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -306,7 +380,7 @@ dashboard.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see routes/web.php:13
+* @see routes/web.php:28
 * @route '/dashboard'
 */
 dashboard.url = (options?: RouteQueryOptions) => {
@@ -314,7 +388,7 @@ dashboard.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see routes/web.php:13
+* @see routes/web.php:28
 * @route '/dashboard'
 */
 dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -323,7 +397,7 @@ dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see routes/web.php:13
+* @see routes/web.php:28
 * @route '/dashboard'
 */
 dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -332,7 +406,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see routes/web.php:13
+* @see routes/web.php:28
 * @route '/dashboard'
 */
 const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -341,7 +415,7 @@ const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> 
 })
 
 /**
-* @see routes/web.php:13
+* @see routes/web.php:28
 * @route '/dashboard'
 */
 dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -350,7 +424,7 @@ dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 })
 
 /**
-* @see routes/web.php:13
+* @see routes/web.php:28
 * @route '/dashboard'
 */
 dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

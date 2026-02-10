@@ -1,0 +1,76 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\VerificationSubmission;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+
+class VerificationSubmissionController extends Controller
+{
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'gender' => 'required|in:male,female',
+            'date_of_birth' => 'required|date|before:today',
+            'id_number' => 'required|string|size:10|unique:verification_submissions,id_number',
+            'id_front' => 'required|file|image|max:5120', // 5MB
+            'license_front' => 'required|file|image|max:5120',
+            'license_expiry' => 'required|date|after:today',
+            'vehicle_registration' => 'required|file|image|max:5120',
+            'vehicle_sequence_number' => 'required|string|max:50',
+            'selfie' => 'required|string', // Base64 data URL
+            'stc_phone' => 'required|string|size:9|regex:/^5[0-9]{8}$/',
+        ], [
+            'id_number.unique' => 'This ID number has already been submitted.',
+            'id_number.size' => 'ID number must be exactly 10 digits.',
+            'date_of_birth.before' => 'Date of birth must be in the past.',
+            'license_expiry.after' => 'License expiry date must be in the future.',
+            'stc_phone.regex' => 'STC phone number must start with 5 and be 9 digits.',
+            'stc_phone.size' => 'STC phone number must be exactly 9 digits.',
+        ]);
+
+        // Handle file uploads
+        $idFrontPath = $request->file('id_front')->store('verifications/ids', 'public');
+        $licenseFrontPath = $request->file('license_front')->store('verifications/licenses', 'public');
+        $vehicleRegistrationPath = $request->file('vehicle_registration')->store('verifications/vehicles', 'public');
+
+        // Handle selfie (base64 to file)
+        $selfieData = $validated['selfie'];
+        $selfieData = str_replace('data:image/jpeg;base64,', '', $selfieData);
+        $selfieData = str_replace(' ', '+', $selfieData);
+        $selfieDecoded = base64_decode($selfieData);
+        
+        $selfieName = 'selfie_' . Str::random(40) . '.jpg';
+        $selfiePath = 'verifications/selfies/' . $selfieName;
+        Storage::disk('public')->put($selfiePath, $selfieDecoded);
+
+        // Create submission
+        $submission = VerificationSubmission::create([
+            'gender' => $validated['gender'],
+            'date_of_birth' => $validated['date_of_birth'],
+            'id_number' => $validated['id_number'],
+            'id_front_path' => $idFrontPath,
+            'license_front_path' => $licenseFrontPath,
+            'license_expiry' => $validated['license_expiry'],
+            'vehicle_registration_path' => $vehicleRegistrationPath,
+            'vehicle_sequence_number' => $validated['vehicle_sequence_number'],
+            'selfie_path' => $selfiePath,
+            'stc_phone' => $validated['stc_phone'],
+            'status' => 'pending',
+        ]);
+
+        return redirect()->route('verification.success', ['submission' => $submission->id])
+            ->with('success', 'Your verification has been submitted successfully!');
+    }
+
+    public function success($submissionId)
+    {
+        $submission = VerificationSubmission::findOrFail($submissionId);
+
+        return inertia('verification/success', [
+            'submission' => $submission,
+        ]);
+    }
+}
