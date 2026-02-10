@@ -8,7 +8,8 @@ import {
     History,
     Shield,
     PlusCircle,
-    ClipboardList
+    ClipboardList,
+    Image as ImageIcon,
 } from 'lucide-react';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -79,6 +80,11 @@ export function AppSidebar() {
                 title: 'Audit Logs',
                 href: '/admin/audit-logs',
                 icon: History,
+            },
+            {
+                title: 'Homepage Content',
+                href: '/admin/homepage',
+                icon: ImageIcon,
             }
         );
     }

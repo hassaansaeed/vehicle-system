@@ -1,12 +1,23 @@
 <?php
 
+use App\Models\HomepageSetting;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
 Route::get('/', function () {
+    $setting = HomepageSetting::current();
+
     return Inertia::render('welcome', [
         'canRegister' => Features::enabled(Features::registration()),
+        'homepage' => $setting
+            ? [
+                'title' => $setting->title,
+                'heading' => $setting->heading,
+                'subheading' => $setting->subheading,
+                'image_path' => $setting->image_path,
+            ]
+            : null,
     ]);
 })->name('home');
 
@@ -47,6 +58,10 @@ Route::middleware(['auth', 'verified', 'role:admin,reviewer'])->prefix('admin')-
         Route::patch('users/{user}/toggle', [App\Http\Controllers\Admin\UserController::class, 'toggleStatus'])->name('users.toggle');
         Route::patch('users/{user}/role', [App\Http\Controllers\Admin\UserController::class, 'updateRole'])->name('users.update-role');
         
+        // Homepage content
+        Route::get('homepage', [App\Http\Controllers\Admin\HomepageController::class, 'edit'])->name('homepage.edit');
+        Route::post('homepage', [App\Http\Controllers\Admin\HomepageController::class, 'update'])->name('homepage.update');
+
         // Audit Logs
         Route::get('audit-logs', [App\Http\Controllers\Admin\AuditLogController::class, 'index'])->name('audit-logs.index');
     });

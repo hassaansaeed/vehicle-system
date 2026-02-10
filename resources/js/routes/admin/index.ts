@@ -1,6 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 import verifications from './verifications'
 import users from './users'
+import homepage from './homepage'
 import auditLogs from './audit-logs'
 /**
 * @see \App\Http\Controllers\DashboardController::dashboard
@@ -87,6 +88,7 @@ const admin = {
     dashboard: Object.assign(dashboard, dashboard),
     verifications: Object.assign(verifications, verifications),
     users: Object.assign(users, users),
+    homepage: Object.assign(homepage, homepage),
     auditLogs: Object.assign(auditLogs, auditLogs),
 }
 

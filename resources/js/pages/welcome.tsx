@@ -4,8 +4,28 @@ import { Button } from '@/components/ui/button';
 import { dashboard, login, register } from '@/routes';
 import type { SharedData } from '@/types';
 
-export default function Welcome({ canRegister = true }: { canRegister?: boolean }) {
+type HomepageContent = {
+    title: string | null;
+    heading: string | null;
+    subheading: string | null;
+    image_path: string | null;
+} | null;
+
+export default function Welcome({
+    canRegister = true,
+    homepage = null,
+}: {
+    canRegister?: boolean;
+    homepage?: HomepageContent;
+}) {
     const { auth } = usePage<SharedData>().props;
+
+    const title = homepage?.title ?? 'Vehicle & Identity';
+    const heading = homepage?.heading ?? 'Verification Portal';
+    const subheading =
+        homepage?.subheading ??
+        'A secure, government-compliant platform for instant vehicle identity verification and documentation management.';
+    const imageUrl = homepage?.image_path ? `/storage/${homepage.image_path}` : null;
 
     return (
         <>
@@ -58,15 +78,15 @@ export default function Welcome({ canRegister = true }: { canRegister?: boolean 
                     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-5 duration-1000">
                         {/* Title */}
                         <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-foreground">
-                            Vehicle & Identity <br />
+                            {title} <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                                Verification Portal
+                                {heading}
                             </span>
                         </h1>
 
                         {/* Description */}
                         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                            A secure, government-compliant platform for instant vehicle identity verification and documentation management.
+                            {subheading}
                         </p>
 
                         {/* Primary CTA */}
@@ -77,6 +97,17 @@ export default function Welcome({ canRegister = true }: { canRegister?: boolean 
                                 </Button>
                             </Link>
                         </div>
+
+                        {/* Optional Hero Image */}
+                        {imageUrl && (
+                            <div className="pt-6 flex justify-center">
+                                <img
+                                    src={imageUrl}
+                                    alt={heading}
+                                    className="max-h-72 rounded-2xl border border-border/60 bg-muted object-cover shadow-xl"
+                                />
+                            </div>
+                        )}
 
                         {/* Trust Indicators (Minimal) */}
                         <div className="pt-12 flex flex-wrap justify-center gap-8 text-sm text-muted-foreground/80">
