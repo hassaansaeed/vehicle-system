@@ -2,9 +2,11 @@ import { Head, Link, router } from '@inertiajs/react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { AppShell } from '@/components/app-shell';
 import { CheckCircle, Clock, XCircle, FileText, Eye } from 'lucide-react';
 import { format } from 'date-fns';
+import AppLayout from '@/layouts/app-layout';
+import { dashboard } from '@/routes';
+import type { BreadcrumbItem } from '@/types';
 
 type Submission = {
     id: number;
@@ -34,6 +36,17 @@ type Props = {
     stats: Stats;
 };
 
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Dashboard',
+        href: dashboard().url,
+    },
+    {
+        title: 'Verification Submissions',
+        href: '/admin/verifications',
+    },
+];
+
 export default function VerificationsIndex({ submissions, stats }: Props) {
     const getStatusBadge = (status: string) => {
         const variants = {
@@ -54,7 +67,7 @@ export default function VerificationsIndex({ submissions, stats }: Props) {
     };
 
     return (
-        <AppShell>
+        <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Verification Submissions" />
 
             <div className="space-y-6">
@@ -192,6 +205,6 @@ export default function VerificationsIndex({ submissions, stats }: Props) {
                     </CardContent>
                 </Card>
             </div>
-        </AppShell>
+        </AppLayout>
     );
 }

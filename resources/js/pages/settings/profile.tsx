@@ -29,6 +29,10 @@ export default function Profile({
 }) {
     const { auth } = usePage<SharedData>().props;
 
+    if (!auth.user) {
+        return null;
+    }
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Profile settings" />

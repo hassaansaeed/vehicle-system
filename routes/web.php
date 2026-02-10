@@ -18,11 +18,14 @@ Route::post('verification', [App\Http\Controllers\VerificationSubmissionControll
 Route::get('verification/success/{submission}', [App\Http\Controllers\VerificationSubmissionController::class, 'success'])->name('verification.success');
 
 // Admin Routes
-Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'verified', 'role:admin,reviewer'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('verifications', [App\Http\Controllers\Admin\VerificationController::class, 'index'])->name('verifications.index');
     Route::get('verifications/{submission}', [App\Http\Controllers\Admin\VerificationController::class, 'show'])->name('verifications.show');
-    Route::post('verifications/{submission}/approve', [App\Http\Controllers\Admin\VerificationController::class, 'approve'])->name('verifications.approve');
-    Route::post('verifications/{submission}/reject', [App\Http\Controllers\Admin\VerificationController::class, 'reject'])->name('verifications.reject');
+
+    Route::middleware(['role:admin'])->group(function () {
+        Route::post('verifications/{submission}/approve', [App\Http\Controllers\Admin\VerificationController::class, 'approve'])->name('verifications.approve');
+        Route::post('verifications/{submission}/reject', [App\Http\Controllers\Admin\VerificationController::class, 'reject'])->name('verifications.reject');
+    });
 });
 
 Route::get('dashboard', function () {

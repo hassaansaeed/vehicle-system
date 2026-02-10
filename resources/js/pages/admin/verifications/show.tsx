@@ -1,13 +1,15 @@
-import { Head, router, useForm } from '@inertiajs/react';
+import { Head, router, useForm, usePage } from '@inertiajs/react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { AppShell } from '@/components/app-shell';
 import { CheckCircle, XCircle, ArrowLeft, User, FileText, Car, Camera, CreditCard } from 'lucide-react';
 import { format } from 'date-fns';
 import { useState } from 'react';
+import AppLayout from '@/layouts/app-layout';
+import { dashboard } from '@/routes';
+import type { BreadcrumbItem, SharedData } from '@/types';
 import {
     Dialog,
     DialogContent,
@@ -41,7 +43,22 @@ type Props = {
     submission: Submission;
 };
 
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Dashboard',
+        href: dashboard().url,
+    },
+    {
+        title: 'Verification Submissions',
+        href: '/admin/verifications',
+    },
+];
+
 export default function VerificationShow({ submission }: Props) {
+    const { auth } = usePage<SharedData>().props;
+    const role = auth.user?.role?.name;
+    const canManage = role === 'admin';
+
     const [showRejectDialog, setShowRejectDialog] = useState(false);
     const [showApproveDialog, setShowApproveDialog] = useState(false);
 
@@ -90,7 +107,15 @@ export default function VerificationShow({ submission }: Props) {
     };
 
     return (
-        <AppShell>
+        <AppLayout
+            breadcrumbs={[
+                ...breadcrumbs,
+                {
+                    title: `Submission #${submission.id}`,
+                    href: `/admin/verifications/${submission.id}`,
+                },
+            ]}
+        >
             <Head title={`Submission #${submission.id}`} />
 
             <div className="space-y-6">
@@ -278,7 +303,7 @@ export default function VerificationShow({ submission }: Props) {
                 </div>
 
                 {/* Action Buttons */}
-                {submission.status === 'pending' && (
+                {canManage && submission.status === 'pending' && (
                     <div className="flex justify-end gap-4 border-t pt-6">
                         <Button
                             variant="destructive"
@@ -371,6 +396,6 @@ export default function VerificationShow({ submission }: Props) {
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
-        </AppShell>
+        </AppLayout>
     );
 }

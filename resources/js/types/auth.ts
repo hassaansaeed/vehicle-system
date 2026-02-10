@@ -5,13 +5,19 @@ export type User = {
     avatar?: string;
     email_verified_at: string | null;
     two_factor_enabled?: boolean;
+    role_id?: number | null;
+    role?: {
+        id: number;
+        name: 'admin' | 'reviewer' | 'user' | (string & {});
+        display_name?: string | null;
+    } | null;
     created_at: string;
     updated_at: string;
     [key: string]: unknown;
 };
 
 export type Auth = {
-    user: User;
+    user: User | null;
 };
 
 export type TwoFactorSetupData = {

@@ -1,5 +1,5 @@
-import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import { Link, usePage } from '@inertiajs/react';
+import { BookOpen, FileText, Folder, LayoutGrid } from 'lucide-react';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -13,16 +13,16 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
-import type { NavItem } from '@/types';
+import type { NavItem, SharedData } from '@/types';
 import AppLogo from './app-logo';
 
-const mainNavItems: NavItem[] = [
+const baseNavItems: NavItem[] = [
     {
         title: 'Dashboard',
         href: dashboard(),
         icon: LayoutGrid,
     },
-];
+]
 
 const footerNavItems: NavItem[] = [
     {
@@ -38,6 +38,23 @@ const footerNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
+    const { auth } = usePage<SharedData>().props;
+    const role = auth.user?.role?.name;
+    const canReviewVerifications = role === 'admin' || role === 'reviewer';
+
+    const mainNavItems: NavItem[] = [
+        ...baseNavItems,
+        ...(canReviewVerifications
+            ? [
+                  {
+                      title: 'Verification Submissions',
+                      href: '/admin/verifications',
+                      icon: FileText,
+                  } satisfies NavItem,
+              ]
+            : []),
+    ];
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>

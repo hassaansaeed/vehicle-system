@@ -267,7 +267,7 @@ approve.form = approveForm
 
 /**
 * @see \App\Http\Controllers\Admin\VerificationController::reject
-* @see app/Http/Controllers/Admin/VerificationController.php:52
+* @see app/Http/Controllers/Admin/VerificationController.php:56
 * @route '/admin/verifications/{submission}/reject'
 */
 export const reject = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -282,7 +282,7 @@ reject.definition = {
 
 /**
 * @see \App\Http\Controllers\Admin\VerificationController::reject
-* @see app/Http/Controllers/Admin/VerificationController.php:52
+* @see app/Http/Controllers/Admin/VerificationController.php:56
 * @route '/admin/verifications/{submission}/reject'
 */
 reject.url = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -315,7 +315,7 @@ reject.url = (args: { submission: number | { id: number } } | [submission: numbe
 
 /**
 * @see \App\Http\Controllers\Admin\VerificationController::reject
-* @see app/Http/Controllers/Admin/VerificationController.php:52
+* @see app/Http/Controllers/Admin/VerificationController.php:56
 * @route '/admin/verifications/{submission}/reject'
 */
 reject.post = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -325,7 +325,7 @@ reject.post = (args: { submission: number | { id: number } } | [submission: numb
 
 /**
 * @see \App\Http\Controllers\Admin\VerificationController::reject
-* @see app/Http/Controllers/Admin/VerificationController.php:52
+* @see app/Http/Controllers/Admin/VerificationController.php:56
 * @route '/admin/verifications/{submission}/reject'
 */
 const rejectForm = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -335,7 +335,7 @@ const rejectForm = (args: { submission: number | { id: number } } | [submission:
 
 /**
 * @see \App\Http\Controllers\Admin\VerificationController::reject
-* @see app/Http/Controllers/Admin/VerificationController.php:52
+* @see app/Http/Controllers/Admin/VerificationController.php:56
 * @route '/admin/verifications/{submission}/reject'
 */
 rejectForm.post = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

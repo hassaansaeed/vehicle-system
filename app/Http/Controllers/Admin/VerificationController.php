@@ -39,6 +39,10 @@ class VerificationController extends Controller
 
     public function approve(Request $request, VerificationSubmission $submission)
     {
+        if (! auth()->user()?->isAdmin()) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $submission->update([
             'status' => 'approved',
             'admin_notes' => $request->input('notes'),
@@ -51,6 +55,10 @@ class VerificationController extends Controller
 
     public function reject(Request $request, VerificationSubmission $submission)
     {
+        if (! auth()->user()?->isAdmin()) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $request->validate([
             'notes' => 'required|string|max:1000',
         ]);
