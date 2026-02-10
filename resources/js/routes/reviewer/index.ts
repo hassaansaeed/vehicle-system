@@ -1,11 +1,8 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
-import verifications from './verifications'
-import users from './users'
-import auditLogs from './audit-logs'
 /**
 * @see \App\Http\Controllers\DashboardController::dashboard
-* @see app/Http/Controllers/DashboardController.php:64
-* @route '/admin/dashboard'
+* @see app/Http/Controllers/DashboardController.php:49
+* @route '/reviewer/dashboard'
 */
 export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: dashboard.url(options),
@@ -14,13 +11,13 @@ export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> =
 
 dashboard.definition = {
     methods: ["get","head"],
-    url: '/admin/dashboard',
+    url: '/reviewer/dashboard',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\DashboardController::dashboard
-* @see app/Http/Controllers/DashboardController.php:64
-* @route '/admin/dashboard'
+* @see app/Http/Controllers/DashboardController.php:49
+* @route '/reviewer/dashboard'
 */
 dashboard.url = (options?: RouteQueryOptions) => {
     return dashboard.definition.url + queryParams(options)
@@ -28,8 +25,8 @@ dashboard.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DashboardController::dashboard
-* @see app/Http/Controllers/DashboardController.php:64
-* @route '/admin/dashboard'
+* @see app/Http/Controllers/DashboardController.php:49
+* @route '/reviewer/dashboard'
 */
 dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: dashboard.url(options),
@@ -38,8 +35,8 @@ dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\DashboardController::dashboard
-* @see app/Http/Controllers/DashboardController.php:64
-* @route '/admin/dashboard'
+* @see app/Http/Controllers/DashboardController.php:49
+* @route '/reviewer/dashboard'
 */
 dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: dashboard.url(options),
@@ -48,8 +45,8 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\DashboardController::dashboard
-* @see app/Http/Controllers/DashboardController.php:64
-* @route '/admin/dashboard'
+* @see app/Http/Controllers/DashboardController.php:49
+* @route '/reviewer/dashboard'
 */
 const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: dashboard.url(options),
@@ -58,8 +55,8 @@ const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> 
 
 /**
 * @see \App\Http\Controllers\DashboardController::dashboard
-* @see app/Http/Controllers/DashboardController.php:64
-* @route '/admin/dashboard'
+* @see app/Http/Controllers/DashboardController.php:49
+* @route '/reviewer/dashboard'
 */
 dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: dashboard.url(options),
@@ -68,8 +65,8 @@ dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 
 /**
 * @see \App\Http\Controllers\DashboardController::dashboard
-* @see app/Http/Controllers/DashboardController.php:64
-* @route '/admin/dashboard'
+* @see app/Http/Controllers/DashboardController.php:49
+* @route '/reviewer/dashboard'
 */
 dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: dashboard.url({
@@ -83,11 +80,8 @@ dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =
 
 dashboard.form = dashboardForm
 
-const admin = {
+const reviewer = {
     dashboard: Object.assign(dashboard, dashboard),
-    verifications: Object.assign(verifications, verifications),
-    users: Object.assign(users, users),
-    auditLogs: Object.assign(auditLogs, auditLogs),
 }
 
-export default admin
+export default reviewer

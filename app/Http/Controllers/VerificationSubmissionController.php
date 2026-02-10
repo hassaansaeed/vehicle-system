@@ -48,6 +48,7 @@ class VerificationSubmissionController extends Controller
 
         // Create submission
         $submission = VerificationSubmission::create([
+            'user_id' => auth()->id(),
             'gender' => $validated['gender'],
             'date_of_birth' => $validated['date_of_birth'],
             'id_number' => $validated['id_number'],
@@ -65,9 +66,38 @@ class VerificationSubmissionController extends Controller
             ->with('success', 'Your verification has been submitted successfully!');
     }
 
+    public function show($submissionId)
+    {
+        $submission = VerificationSubmission::findOrFail($submissionId);
+        $user = auth()->user();
+
+        // Security check: allow staff or if submission has no user (guest submission)
+        // If submission has a user, only that user or staff can see it
+        if ($submission->user_id) {
+            if (!$user || ($submission->user_id !== $user->id && !$user->isAdmin() && !$user->isReviewer())) {
+                abort(403);
+            }
+        }
+        
+        // If no user_id, it was a guest submission - for now we allow viewing it
+        // In a real app we might want a token in the URL for guests
+
+        return inertia('verification/show', [
+            'submission' => $submission,
+        ]);
+    }
+
     public function success($submissionId)
     {
         $submission = VerificationSubmission::findOrFail($submissionId);
+        $user = auth()->user();
+
+        // Security check: same as show method
+        if ($submission->user_id) {
+            if (!$user || ($submission->user_id !== $user->id && !$user->isAdmin() && !$user->isReviewer())) {
+                abort(403);
+            }
+        }
 
         return inertia('verification/success', [
             'submission' => $submission,

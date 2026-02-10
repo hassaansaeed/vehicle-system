@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class VerificationSubmission extends Model
 {
     protected $fillable = [
+        'user_id',
         'gender',
         'date_of_birth',
         'id_number',
@@ -20,6 +21,8 @@ class VerificationSubmission extends Model
         'stc_phone',
         'status',
         'admin_notes',
+        'reviewer_notes',
+        'internal_notes',
         'reviewed_at',
         'reviewed_by',
     ];
@@ -30,6 +33,11 @@ class VerificationSubmission extends Model
         'reviewed_at' => 'datetime',
     ];
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function reviewer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'reviewed_by');
@@ -38,6 +46,16 @@ class VerificationSubmission extends Model
     public function scopePending($query)
     {
         return $query->where('status', 'pending');
+    }
+
+    public function scopeUnderReview($query)
+    {
+        return $query->where('status', 'under_review');
+    }
+
+    public function scopeVerified($query)
+    {
+        return $query->where('status', 'verified');
     }
 
     public function scopeApproved($query)

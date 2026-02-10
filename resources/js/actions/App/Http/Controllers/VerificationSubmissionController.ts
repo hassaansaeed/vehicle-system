@@ -56,8 +56,107 @@ storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => (
 store.form = storeForm
 
 /**
+* @see \App\Http\Controllers\VerificationSubmissionController::show
+* @see app/Http/Controllers/VerificationSubmissionController.php:69
+* @route '/verification/show/{submission}'
+*/
+export const show = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: show.url(args, options),
+    method: 'get',
+})
+
+show.definition = {
+    methods: ["get","head"],
+    url: '/verification/show/{submission}',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\VerificationSubmissionController::show
+* @see app/Http/Controllers/VerificationSubmissionController.php:69
+* @route '/verification/show/{submission}'
+*/
+show.url = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { submission: args }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            submission: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        submission: args.submission,
+    }
+
+    return show.definition.url
+            .replace('{submission}', parsedArgs.submission.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\VerificationSubmissionController::show
+* @see app/Http/Controllers/VerificationSubmissionController.php:69
+* @route '/verification/show/{submission}'
+*/
+show.get = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\VerificationSubmissionController::show
+* @see app/Http/Controllers/VerificationSubmissionController.php:69
+* @route '/verification/show/{submission}'
+*/
+show.head = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: show.url(args, options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\VerificationSubmissionController::show
+* @see app/Http/Controllers/VerificationSubmissionController.php:69
+* @route '/verification/show/{submission}'
+*/
+const showForm = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\VerificationSubmissionController::show
+* @see app/Http/Controllers/VerificationSubmissionController.php:69
+* @route '/verification/show/{submission}'
+*/
+showForm.get = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\VerificationSubmissionController::show
+* @see app/Http/Controllers/VerificationSubmissionController.php:69
+* @route '/verification/show/{submission}'
+*/
+showForm.head = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+show.form = showForm
+
+/**
 * @see \App\Http\Controllers\VerificationSubmissionController::success
-* @see app/Http/Controllers/VerificationSubmissionController.php:68
+* @see app/Http/Controllers/VerificationSubmissionController.php:90
 * @route '/verification/success/{submission}'
 */
 export const success = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -72,7 +171,7 @@ success.definition = {
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::success
-* @see app/Http/Controllers/VerificationSubmissionController.php:68
+* @see app/Http/Controllers/VerificationSubmissionController.php:90
 * @route '/verification/success/{submission}'
 */
 success.url = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -99,7 +198,7 @@ success.url = (args: { submission: string | number } | [submission: string | num
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::success
-* @see app/Http/Controllers/VerificationSubmissionController.php:68
+* @see app/Http/Controllers/VerificationSubmissionController.php:90
 * @route '/verification/success/{submission}'
 */
 success.get = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -109,7 +208,7 @@ success.get = (args: { submission: string | number } | [submission: string | num
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::success
-* @see app/Http/Controllers/VerificationSubmissionController.php:68
+* @see app/Http/Controllers/VerificationSubmissionController.php:90
 * @route '/verification/success/{submission}'
 */
 success.head = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -119,7 +218,7 @@ success.head = (args: { submission: string | number } | [submission: string | nu
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::success
-* @see app/Http/Controllers/VerificationSubmissionController.php:68
+* @see app/Http/Controllers/VerificationSubmissionController.php:90
 * @route '/verification/success/{submission}'
 */
 const successForm = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -129,7 +228,7 @@ const successForm = (args: { submission: string | number } | [submission: string
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::success
-* @see app/Http/Controllers/VerificationSubmissionController.php:68
+* @see app/Http/Controllers/VerificationSubmissionController.php:90
 * @route '/verification/success/{submission}'
 */
 successForm.get = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -139,7 +238,7 @@ successForm.get = (args: { submission: string | number } | [submission: string |
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::success
-* @see app/Http/Controllers/VerificationSubmissionController.php:68
+* @see app/Http/Controllers/VerificationSubmissionController.php:90
 * @route '/verification/success/{submission}'
 */
 successForm.head = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -154,6 +253,6 @@ successForm.head = (args: { submission: string | number } | [submission: string 
 
 success.form = successForm
 
-const VerificationSubmissionController = { store, success }
+const VerificationSubmissionController = { store, show, success }
 
 export default VerificationSubmissionController

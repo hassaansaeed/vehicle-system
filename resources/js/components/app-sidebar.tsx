@@ -1,5 +1,15 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, FileText, Folder, LayoutGrid } from 'lucide-react';
+import {
+    BookOpen,
+    FileText,
+    Folder,
+    LayoutGrid,
+    Users,
+    History,
+    Shield,
+    PlusCircle,
+    ClipboardList
+} from 'lucide-react';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -16,44 +26,64 @@ import { dashboard } from '@/routes';
 import type { NavItem, SharedData } from '@/types';
 import AppLogo from './app-logo';
 
-const baseNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-]
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
-];
-
 export function AppSidebar() {
     const { auth } = usePage<SharedData>().props;
-    const role = auth.user?.role?.name;
-    const canReviewVerifications = role === 'admin' || role === 'reviewer';
+    const role = auth.user?.role?.name || 'user';
+    const isAdmin = role === 'admin';
+    const isReviewer = role === 'reviewer';
+    const isUser = role === 'user';
 
+    // Build navigation items based on role
     const mainNavItems: NavItem[] = [
-        ...baseNavItems,
-        ...(canReviewVerifications
-            ? [
-                  {
-                      title: 'Verification Submissions',
-                      href: '/admin/verifications',
-                      icon: FileText,
-                  } satisfies NavItem,
-              ]
-            : []),
+        {
+            title: 'Dashboard',
+            href: '/dashboard',
+            icon: LayoutGrid,
+        },
     ];
+
+    // User-specific items
+    if (isUser) {
+        mainNavItems.push(
+            {
+                title: 'New Verification',
+                href: '/verification',
+                icon: PlusCircle,
+            },
+            {
+                title: 'My Applications',
+                href: '/dashboard', // User dashboard lists applications
+                icon: ClipboardList,
+            }
+        );
+    }
+
+    // Admin & Reviewer shared items
+    if (isAdmin || isReviewer) {
+        mainNavItems.push({
+            title: 'Verifications',
+            href: '/admin/verifications',
+            icon: FileText,
+        });
+    }
+
+    // Admin-only items
+    if (isAdmin) {
+        mainNavItems.push(
+            {
+                title: 'User Management',
+                href: '/admin/users',
+                icon: Users,
+            },
+            {
+                title: 'Audit Logs',
+                href: '/admin/audit-logs',
+                icon: History,
+            }
+        );
+    }
+
+    const footerNavItems: NavItem[] = [];
 
     return (
         <Sidebar collapsible="icon" variant="inset">
