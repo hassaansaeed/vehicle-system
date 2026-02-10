@@ -80,8 +80,39 @@ export default function VerificationWizard() {
         }
     };
 
+    const isStepValid = (stepNumber: number) => {
+        switch (stepNumber) {
+            case 1:
+                return (
+                    form.data.gender !== '' &&
+                    form.data.date_of_birth !== '' &&
+                    form.data.id_number.length === 10
+                );
+            case 2:
+                return (
+                    form.data.id_front !== null &&
+                    form.data.license_front !== null &&
+                    form.data.license_expiry !== ''
+                );
+            case 3:
+                return (
+                    form.data.vehicle_registration !== null &&
+                    form.data.vehicle_sequence_number !== ''
+                );
+            case 4:
+                return (
+                    form.data.selfie !== '' &&
+                    form.data.stc_phone.length === 9
+                );
+            default:
+                return true;
+        }
+    };
+
     const nextStep = () => {
-        if (step < 5) setStep(step + 1);
+        if (isStepValid(step) && step < 5) {
+            setStep(step + 1);
+        }
     };
 
     const prevStep = () => {
@@ -558,7 +589,12 @@ export default function VerificationWizard() {
                                         </Button>
 
                                         {step < 5 ? (
-                                            <Button type="button" onClick={nextStep} className="bg-primary text-white shadow-lg shadow-primary/20">
+                                            <Button
+                                                type="button"
+                                                onClick={nextStep}
+                                                disabled={!isStepValid(step)}
+                                                className="bg-primary text-white shadow-lg shadow-primary/20 disabled:opacity-50"
+                                            >
                                                 Next Step <ChevronRight className="ml-2 h-4 w-4" />
                                             </Button>
                                         ) : (

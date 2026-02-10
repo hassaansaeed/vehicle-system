@@ -264,7 +264,7 @@ export default function VerificationShow({ submission }: Props) {
                             </CardHeader>
                             <CardContent>
                                 <img
-                                    src={submission.selfie_path}
+                                    src={`/storage/${submission.selfie_path}`}
                                     alt="Selfie"
                                     className="mx-auto max-w-md rounded-lg border object-cover"
                                 />
