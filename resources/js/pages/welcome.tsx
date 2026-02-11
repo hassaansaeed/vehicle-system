@@ -18,7 +18,7 @@ export default function Welcome({
     canRegister?: boolean;
     homepage?: HomepageContent;
 }) {
-    const { auth } = usePage<SharedData>().props;
+    const { auth, name } = usePage<SharedData>().props;
 
     const title = homepage?.title ?? 'Vehicle & Identity';
     const heading = homepage?.heading ?? 'Verification Portal';
@@ -44,7 +44,7 @@ export default function Welcome({
                         <div className="bg-primary/10 p-2 rounded-lg backdrop-blur-md">
                             <Car className="h-5 w-5 text-primary" />
                         </div>
-                        <span className="font-semibold text-lg tracking-tight">VehicleVerfi</span>
+                        <span className="font-semibold text-lg tracking-tight">{name}</span>
                     </div>
 
                     <nav className="flex items-center gap-4">
@@ -128,7 +128,7 @@ export default function Welcome({
                 <footer className="relative z-10 py-8 border-t border-border/40 bg-background/30 backdrop-blur-sm mt-auto">
                     <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
                         <p className="text-sm text-muted-foreground">
-                            &copy; {new Date().getFullYear()} VehicleVerfi. All rights reserved.
+                            &copy; {new Date().getFullYear()} {name}. All rights reserved.
                         </p>
                         <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm text-muted-foreground">
                             <Link href="#" className="hover:text-primary transition-colors">Privacy Policy</Link>
