@@ -34,6 +34,8 @@ export default function VerificationWizard() {
 
     const form = useForm({
         gender: '',
+        first_name: '',
+        last_name: '',
         date_of_birth: '',
         id_number: '',
         id_front: null as File | null,
@@ -101,6 +103,8 @@ export default function VerificationWizard() {
             case 1:
                 return (
                     form.data.gender !== '' &&
+                    form.data.first_name.trim() !== '' &&
+                    form.data.last_name.trim() !== '' &&
                     form.data.date_of_birth !== '' &&
                     form.data.id_number.length === 10
                 );
@@ -304,6 +308,35 @@ export default function VerificationWizard() {
 
                                                 <div className="grid gap-4 sm:grid-cols-2">
                                                     <div className="space-y-2">
+                                                        <Label htmlFor="firstName">
+                                                            First Name
+                                                        </Label>
+                                                        <Input
+                                                            id="firstName"
+                                                            placeholder="As on ID"
+                                                            value={form.data.first_name}
+                                                            onChange={(e) =>
+                                                                form.setData('first_name', e.target.value)
+                                                            }
+                                                        />
+                                                    </div>
+                                                    <div className="space-y-2">
+                                                        <Label htmlFor="lastName">
+                                                            Last Name
+                                                        </Label>
+                                                        <Input
+                                                            id="lastName"
+                                                            placeholder="As on ID"
+                                                            value={form.data.last_name}
+                                                            onChange={(e) =>
+                                                                form.setData('last_name', e.target.value)
+                                                            }
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="grid gap-4 sm:grid-cols-2">
+                                                    <div className="space-y-2">
                                                         <Label htmlFor="dob">
                                                             Date of Birth
                                                         </Label>
@@ -311,7 +344,9 @@ export default function VerificationWizard() {
                                                             id="dob"
                                                             type="date"
                                                             value={form.data.date_of_birth}
-                                                            onChange={(e) => form.setData('date_of_birth', e.target.value)}
+                                                            onChange={(e) =>
+                                                                form.setData('date_of_birth', e.target.value)
+                                                            }
                                                             className="block w-full"
                                                         />
                                                     </div>
@@ -563,7 +598,9 @@ export default function VerificationWizard() {
                                                 <div className="grid grid-cols-2 gap-4">
                                                     <div>
                                                         <span className="text-muted-foreground block text-xs uppercase tracking-wider">Name</span>
-                                                        <span className="font-medium">User Name (Auth)</span>
+                                                            <span className="font-medium">
+                                                                {`${form.data.first_name} ${form.data.last_name}`.trim()}
+                                                            </span>
                                                     </div>
                                                     <div>
                                                         <span className="text-muted-foreground block text-xs uppercase tracking-wider">ID Number</span>

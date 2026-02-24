@@ -33,8 +33,8 @@ export default function VerificationSuccess({ submission }: Props) {
 
                     <div className="rounded-lg border bg-muted/30 p-6 space-y-3">
                         <div className="flex justify-between text-sm">
-                            <span className="text-muted-foreground">Submission ID:</span>
-                            <span className="font-medium">#{submission.id}</span>
+                            {/*<span className="text-muted-foreground">Submission ID:</span>*/}
+                            {/*<span className="font-medium">#{submission.id}</span>*/}
                         </div>
                         <div className="flex justify-between text-sm">
                             <span className="text-muted-foreground">ID Number:</span>

@@ -13,6 +13,8 @@ class VerificationSubmissionController extends Controller
     {
         $validated = $request->validate([
             'gender' => 'required|in:male,female',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
             'date_of_birth' => 'required|date|before:today',
             'id_number' => 'required|string|size:10|unique:verification_submissions,id_number',
             'id_front' => 'required|file|image|max:5120', // 5MB
@@ -50,6 +52,8 @@ class VerificationSubmissionController extends Controller
         $submission = VerificationSubmission::create([
             'user_id' => auth()->id(),
             'gender' => $validated['gender'],
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
             'date_of_birth' => $validated['date_of_birth'],
             'id_number' => $validated['id_number'],
             'id_front_path' => $idFrontPath,
