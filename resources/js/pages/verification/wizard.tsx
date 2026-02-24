@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent } from '@/components/ui/card';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import {
     Activity,
     ArrowLeft,
@@ -55,6 +56,7 @@ export default function VerificationWizard() {
     });
 
     const [isCameraActive, setIsCameraActive] = useState(false);
+    const [cameraModalOpen, setCameraModalOpen] = useState(false);
     const videoRef = useRef<HTMLVideoElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [cameraError, setCameraError] = useState<string | null>(null);
@@ -150,38 +152,26 @@ export default function VerificationWizard() {
     };
 
     // Camera Logic
-    const startCamera = async () => {
-        setIsCameraActive(true);
-        setCameraError(null);
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({
-                video: { facingMode: 'user' },
-            });
-            if (videoRef.current) {
-                videoRef.current.srcObject = stream;
-            }
-        } catch (err) {
-            setCameraError(
-                'Could not access camera. Please check permissions.'
-            );
-            setIsCameraActive(false);
-        }
+    const startCamera = () => {
+        setCameraModalOpen(true);
     };
 
     const capturePhoto = () => {
         if (videoRef.current && canvasRef.current) {
             const context = canvasRef.current.getContext('2d');
             if (context) {
-                context.drawImage(
-                    videoRef.current,
-                    0,
-                    0,
-                    canvasRef.current.width,
-                    canvasRef.current.height
-                );
+                const video = videoRef.current;
+                const canvas = canvasRef.current;
+
+                const width = video.videoWidth || 640;
+                const height = video.videoHeight || 480;
+                canvas.width = width;
+                canvas.height = height;
+
+                context.drawImage(video, 0, 0, width, height);
                 const dataUrl = canvasRef.current.toDataURL('image/jpeg');
                 form.setData('selfie', dataUrl);
-                stopCamera();
+                setCameraModalOpen(false);
             }
         }
     };
@@ -198,6 +188,41 @@ export default function VerificationWizard() {
     useEffect(() => {
         return () => stopCamera();
     }, []);
+
+    useEffect(() => {
+        if (!cameraModalOpen) {
+            stopCamera();
+            return;
+        }
+
+        let cancelled = false;
+        setIsCameraActive(true);
+        setCameraError(null);
+
+        (async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: 'user' },
+                });
+
+                if (cancelled) {
+                    stream.getTracks().forEach((track) => track.stop());
+                    return;
+                }
+
+                if (videoRef.current) {
+                    videoRef.current.srcObject = stream;
+                }
+            } catch (err) {
+                setCameraError('Could not access camera. Please check permissions.');
+                setIsCameraActive(false);
+            }
+        })();
+
+        return () => {
+            cancelled = true;
+        };
+    }, [cameraModalOpen]);
 
     // Progress Calculation
     const progress = ((step - 1) / (steps.length - 1)) * 100;
@@ -484,38 +509,6 @@ export default function VerificationWizard() {
                                                                 Retake
                                                             </Button>
                                                         </div>
-                                                    ) : isCameraActive ? (
-                                                        <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-black">
-                                                            <video
-                                                                ref={videoRef}
-                                                                autoPlay
-                                                                playsInline
-                                                                className="h-full w-full object-cover"
-                                                            />
-                                                            <canvas
-                                                                ref={canvasRef}
-                                                                width={640} // Default canvas size, will scale
-                                                                height={480}
-                                                                className="hidden"
-                                                            />
-                                                            <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-4">
-                                                                <Button
-                                                                    type="button"
-                                                                    onClick={capturePhoto}
-                                                                    className="bg-white text-black hover:bg-white/90"
-                                                                >
-                                                                    Capture
-                                                                </Button>
-                                                                <Button
-                                                                    type="button"
-                                                                    variant="outline"
-                                                                    onClick={stopCamera}
-                                                                    className="bg-black/50 text-white hover:bg-black/70 border-none"
-                                                                >
-                                                                    Cancel
-                                                                </Button>
-                                                            </div>
-                                                        </div>
                                                     ) : (
                                                         <div className="flex aspect-video w-full flex-col items-center justify-center rounded-lg border border-dashed bg-muted/50 text-muted-foreground">
                                                             <div className="mb-4 rounded-full bg-muted p-4">
@@ -526,7 +519,7 @@ export default function VerificationWizard() {
                                                                 onClick={startCamera}
                                                                 className="mb-2"
                                                             >
-                                                                Activate Camera
+                                                                Open Camera (Full Screen)
                                                             </Button>
                                                             {cameraError && (
                                                                 <p className="mt-2 text-sm text-destructive flex items-center gap-1">
@@ -694,6 +687,50 @@ export default function VerificationWizard() {
                     </div>
                 </main>
             </div>
+
+            {/* Full-screen camera modal */}
+            <Dialog open={cameraModalOpen} onOpenChange={setCameraModalOpen}>
+                <DialogContent className="max-w-none w-[100vw] h-[100dvh] p-0 border-0 rounded-none bg-black">
+                    <div className="relative h-full w-full">
+                        <video
+                            ref={videoRef}
+                            autoPlay
+                            playsInline
+                            className="h-full w-full object-cover"
+                        />
+                        <canvas ref={canvasRef} className="hidden" />
+
+                        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/70 to-transparent" />
+
+                        <div className="absolute bottom-0 left-0 right-0 p-4 pb-6">
+                            {cameraError ? (
+                                <div className="mb-4 rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
+                                    {cameraError}
+                                </div>
+                            ) : null}
+
+                            <div className="flex items-center justify-center gap-3">
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    onClick={() => setCameraModalOpen(false)}
+                                    className="bg-black/40 text-white hover:bg-black/60 border-white/20"
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    type="button"
+                                    onClick={capturePhoto}
+                                    disabled={!isCameraActive || !!cameraError}
+                                    className="bg-white text-black hover:bg-white/90"
+                                >
+                                    Capture
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
         </>
     );
 }

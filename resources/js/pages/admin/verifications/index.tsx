@@ -19,6 +19,8 @@ import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types';
 
 type Submission = {
+    first_name: string;
+    last_name: string;
     id: number;
     id_number: string;
     gender: string;
@@ -246,8 +248,8 @@ export default function VerificationsIndex({ submissions, stats }: Props) {
                                             <td className="p-4 font-mono text-sm">#{submission.id}</td>
                                             <td className="p-4">
                                                 <div className="flex flex-col">
-                                                    <span className="font-bold text-sm">{submission.user?.name || 'Unknown User'}</span>
-                                                    <span className="text-xs text-muted-foreground">{submission.user?.email || 'N/A'}</span>
+                                                    <span className="font-bold text-sm">{submission?.first_name || 'Unknown User'}</span>
+                                                    <span className="text-xs text-muted-foreground">{submission?.last_name || 'N/A'}</span>
                                                 </div>
                                             </td>
                                             <td className="p-4 font-medium text-sm">{submission.id_number}</td>
