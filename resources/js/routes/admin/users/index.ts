@@ -141,7 +141,7 @@ store.form = storeForm
 * @see app/Http/Controllers/Admin/UserController.php:52
 * @route '/admin/users/{user}/toggle'
 */
-export const toggle = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+export const toggle = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: toggle.url(args, options),
     method: 'patch',
 })
@@ -156,7 +156,7 @@ toggle.definition = {
 * @see app/Http/Controllers/Admin/UserController.php:52
 * @route '/admin/users/{user}/toggle'
 */
-toggle.url = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+toggle.url = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { user: args }
     }
@@ -189,7 +189,7 @@ toggle.url = (args: { user: number | { id: number } } | [user: number | { id: nu
 * @see app/Http/Controllers/Admin/UserController.php:52
 * @route '/admin/users/{user}/toggle'
 */
-toggle.patch = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+toggle.patch = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: toggle.url(args, options),
     method: 'patch',
 })
@@ -199,7 +199,7 @@ toggle.patch = (args: { user: number | { id: number } } | [user: number | { id: 
 * @see app/Http/Controllers/Admin/UserController.php:52
 * @route '/admin/users/{user}/toggle'
 */
-const toggleForm = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const toggleForm = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: toggle.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PATCH',
@@ -214,7 +214,7 @@ const toggleForm = (args: { user: number | { id: number } } | [user: number | { 
 * @see app/Http/Controllers/Admin/UserController.php:52
 * @route '/admin/users/{user}/toggle'
 */
-toggleForm.patch = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+toggleForm.patch = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: toggle.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PATCH',
@@ -231,7 +231,7 @@ toggle.form = toggleForm
 * @see app/Http/Controllers/Admin/UserController.php:73
 * @route '/admin/users/{user}/role'
 */
-export const updateRole = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+export const updateRole = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: updateRole.url(args, options),
     method: 'patch',
 })
@@ -246,7 +246,7 @@ updateRole.definition = {
 * @see app/Http/Controllers/Admin/UserController.php:73
 * @route '/admin/users/{user}/role'
 */
-updateRole.url = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
+updateRole.url = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { user: args }
     }
@@ -279,7 +279,7 @@ updateRole.url = (args: { user: number | { id: number } } | [user: number | { id
 * @see app/Http/Controllers/Admin/UserController.php:73
 * @route '/admin/users/{user}/role'
 */
-updateRole.patch = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+updateRole.patch = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: updateRole.url(args, options),
     method: 'patch',
 })
@@ -289,7 +289,7 @@ updateRole.patch = (args: { user: number | { id: number } } | [user: number | { 
 * @see app/Http/Controllers/Admin/UserController.php:73
 * @route '/admin/users/{user}/role'
 */
-const updateRoleForm = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const updateRoleForm = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: updateRole.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PATCH',
@@ -304,7 +304,7 @@ const updateRoleForm = (args: { user: number | { id: number } } | [user: number 
 * @see app/Http/Controllers/Admin/UserController.php:73
 * @route '/admin/users/{user}/role'
 */
-updateRoleForm.patch = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+updateRoleForm.patch = (args: { user: string | number | { id: string | number } } | [user: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: updateRole.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'PATCH',

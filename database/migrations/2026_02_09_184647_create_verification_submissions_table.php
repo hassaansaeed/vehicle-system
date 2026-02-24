@@ -33,13 +33,13 @@ return new class extends Migration
             $table->string('stc_phone', 9);
 
             // Status & Admin
-            $table->text('status')->default('pending');
+            $table->string('status')->default('pending');
             $table->text('admin_notes')->nullable();
             $table->timestamp('reviewed_at')->nullable();
             $table->foreignId('reviewed_by')->nullable()->constrained('users');
 
-            $table->text('reviewer_notes')->nullable()->after('admin_notes');
-            $table->text('internal_notes')->nullable()->after('reviewer_notes');
+            $table->text('reviewer_notes')->nullable();
+            $table->text('internal_notes')->nullable();
 
             $table->timestamps();
 
