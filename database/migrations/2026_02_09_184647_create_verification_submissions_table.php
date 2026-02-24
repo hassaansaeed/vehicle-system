@@ -13,9 +13,11 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable();
 
             // Personal Information
-            $table->enum('gender', ['male', 'female']);
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('gender')->nullable();
             $table->date('date_of_birth');
-            $table->string('id_number', 10);
+            $table->string('id_number');
 
             // Identity Documents
             $table->string('id_front_path')->nullable();

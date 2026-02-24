@@ -48,7 +48,7 @@ export default function VerificationSuccess({ submission }: Props) {
 
                     <p className="text-sm text-muted-foreground">
                         You will be notified once your verification has been reviewed.
-                        This typically takes 1-2 business days.
+                        This typically takes 4-5 business days.
                     </p>
 
                     <Button

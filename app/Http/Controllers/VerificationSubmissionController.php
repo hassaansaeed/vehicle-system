@@ -21,7 +21,7 @@ class VerificationSubmissionController extends Controller
             'vehicle_registration' => 'required|file|image|max:5120',
             'vehicle_sequence_number' => 'required|string|max:50',
             'selfie' => 'required|string', // Base64 data URL
-            'stc_phone' => 'required|string|size:9|regex:/^5[0-9]{8}$/',
+            'stc_phone' => 'nullable|string|size:9|regex:/^5[0-9]{8}$/',
         ], [
             'id_number.unique' => 'This ID number has already been submitted.',
             'id_number.size' => 'ID number must be exactly 10 digits.',
@@ -58,7 +58,7 @@ class VerificationSubmissionController extends Controller
             'vehicle_registration_path' => $vehicleRegistrationPath,
             'vehicle_sequence_number' => $validated['vehicle_sequence_number'],
             'selfie_path' => $selfiePath,
-            'stc_phone' => $validated['stc_phone'],
+            'stc_phone' => $validated['stc_phone'] ?? '',
             'status' => 'pending',
         ]);
 

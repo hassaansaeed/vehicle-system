@@ -2,11 +2,14 @@
 
 use App\Models\HomepageSetting;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
 
 Route::get('/', function () {
-    $setting = HomepageSetting::current();
+    $setting = Schema::hasTable('homepage_settings')
+        ? HomepageSetting::current()
+        : null;
 
     return Inertia::render('welcome', [
         'canRegister' => Features::enabled(Features::registration()),

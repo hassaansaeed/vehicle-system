@@ -57,6 +57,22 @@ export default function VerificationWizard() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [cameraError, setCameraError] = useState<string | null>(null);
 
+    const handleSelfieFile = (file: File | null) => {
+        if (!file) {
+            form.setData('selfie', '');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            const result = reader.result;
+            if (typeof result === 'string') {
+                form.setData('selfie', result);
+            }
+        };
+        reader.readAsDataURL(file);
+    };
+
     const handleFileChange = (field: string, file: File | null) => {
         if (file) {
             const url = URL.createObjectURL(file);
@@ -102,7 +118,8 @@ export default function VerificationWizard() {
             case 4:
                 return (
                     form.data.selfie !== '' &&
-                    form.data.stc_phone.length === 9
+                    (form.data.stc_phone === '' ||
+                        form.data.stc_phone.length === 9)
                 );
             default:
                 return true;
@@ -481,16 +498,28 @@ export default function VerificationWizard() {
                                                                     <AlertCircle className="h-3 w-3" /> {cameraError}
                                                                 </p>
                                                             )}
-                                                            <p className="text-xs">
-                                                                Or use a device with a camera
+                                                            <p className="text-xs mb-2">
+                                                                Use your camera or upload an existing photo.
                                                             </p>
+                                                            <input
+                                                                type="file"
+                                                                accept="image/*"
+                                                                className="text-xs"
+                                                                onChange={(e) =>
+                                                                    handleSelfieFile(
+                                                                        e.target.files && e.target.files[0]
+                                                                            ? e.target.files[0]
+                                                                            : null
+                                                                    )
+                                                                }
+                                                            />
                                                         </div>
                                                     )}
                                                 </div>
 
                                                 <div className="space-y-2">
                                                     <Label htmlFor="stcPhone">
-                                                        STC Pay Account Number
+                                                        STC Pay Account Number (optional)
                                                     </Label>
                                                     <div className="relative">
                                                         <div className="absolute left-3 top-2.5 text-muted-foreground">
@@ -511,7 +540,7 @@ export default function VerificationWizard() {
                                                         />
                                                     </div>
                                                     <p className="text-xs text-muted-foreground">
-                                                        Enter 9 digits starting with 5
+                                                        Optional. If provided, enter 9 digits starting with 5.
                                                     </p>
                                                 </div>
                                             </div>
@@ -546,7 +575,11 @@ export default function VerificationWizard() {
                                                     </div>
                                                     <div>
                                                         <span className="text-muted-foreground block text-xs uppercase tracking-wider">Phone</span>
-                                                        <span className="font-medium text-primary">+966 {form.data.stc_phone}</span>
+                                                        <span className="font-medium text-primary">
+                                                            {form.data.stc_phone
+                                                                ? `+966 ${form.data.stc_phone}`
+                                                                : 'Not provided'}
+                                                        </span>
                                                     </div>
                                                 </div>
 
