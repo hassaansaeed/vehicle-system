@@ -85,7 +85,7 @@ index.form = indexForm
 * @see app/Http/Controllers/Admin/VerificationController.php:40
 * @route '/admin/verifications/{submission}'
 */
-export const show = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+export const show = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
@@ -100,7 +100,7 @@ show.definition = {
 * @see app/Http/Controllers/Admin/VerificationController.php:40
 * @route '/admin/verifications/{submission}'
 */
-show.url = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+show.url = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { submission: args }
     }
@@ -133,7 +133,7 @@ show.url = (args: { submission: string | number | { id: string | number } } | [s
 * @see app/Http/Controllers/Admin/VerificationController.php:40
 * @route '/admin/verifications/{submission}'
 */
-show.get = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+show.get = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
     method: 'get',
 })
@@ -143,7 +143,7 @@ show.get = (args: { submission: string | number | { id: string | number } } | [s
 * @see app/Http/Controllers/Admin/VerificationController.php:40
 * @route '/admin/verifications/{submission}'
 */
-show.head = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+show.head = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show.url(args, options),
     method: 'head',
 })
@@ -153,7 +153,7 @@ show.head = (args: { submission: string | number | { id: string | number } } | [
 * @see app/Http/Controllers/Admin/VerificationController.php:40
 * @route '/admin/verifications/{submission}'
 */
-const showForm = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+const showForm = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: show.url(args, options),
     method: 'get',
 })
@@ -163,7 +163,7 @@ const showForm = (args: { submission: string | number | { id: string | number } 
 * @see app/Http/Controllers/Admin/VerificationController.php:40
 * @route '/admin/verifications/{submission}'
 */
-showForm.get = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+showForm.get = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: show.url(args, options),
     method: 'get',
 })
@@ -173,7 +173,7 @@ showForm.get = (args: { submission: string | number | { id: string | number } } 
 * @see app/Http/Controllers/Admin/VerificationController.php:40
 * @route '/admin/verifications/{submission}'
 */
-showForm.head = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+showForm.head = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
     action: show.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
@@ -190,7 +190,7 @@ show.form = showForm
 * @see app/Http/Controllers/Admin/VerificationController.php:103
 * @route '/admin/verifications/{submission}/review'
 */
-export const review = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const review = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: review.url(args, options),
     method: 'post',
 })
@@ -205,7 +205,7 @@ review.definition = {
 * @see app/Http/Controllers/Admin/VerificationController.php:103
 * @route '/admin/verifications/{submission}/review'
 */
-review.url = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+review.url = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { submission: args }
     }
@@ -238,7 +238,7 @@ review.url = (args: { submission: string | number | { id: string | number } } | 
 * @see app/Http/Controllers/Admin/VerificationController.php:103
 * @route '/admin/verifications/{submission}/review'
 */
-review.post = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+review.post = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: review.url(args, options),
     method: 'post',
 })
@@ -248,7 +248,7 @@ review.post = (args: { submission: string | number | { id: string | number } } |
 * @see app/Http/Controllers/Admin/VerificationController.php:103
 * @route '/admin/verifications/{submission}/review'
 */
-const reviewForm = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const reviewForm = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: review.url(args, options),
     method: 'post',
 })
@@ -258,7 +258,7 @@ const reviewForm = (args: { submission: string | number | { id: string | number 
 * @see app/Http/Controllers/Admin/VerificationController.php:103
 * @route '/admin/verifications/{submission}/review'
 */
-reviewForm.post = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+reviewForm.post = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: review.url(args, options),
     method: 'post',
 })
@@ -270,7 +270,7 @@ review.form = reviewForm
 * @see app/Http/Controllers/Admin/VerificationController.php:116
 * @route '/admin/verifications/{submission}/verify'
 */
-export const verify = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const verify = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: verify.url(args, options),
     method: 'post',
 })
@@ -285,7 +285,7 @@ verify.definition = {
 * @see app/Http/Controllers/Admin/VerificationController.php:116
 * @route '/admin/verifications/{submission}/verify'
 */
-verify.url = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+verify.url = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { submission: args }
     }
@@ -318,7 +318,7 @@ verify.url = (args: { submission: string | number | { id: string | number } } | 
 * @see app/Http/Controllers/Admin/VerificationController.php:116
 * @route '/admin/verifications/{submission}/verify'
 */
-verify.post = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+verify.post = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: verify.url(args, options),
     method: 'post',
 })
@@ -328,7 +328,7 @@ verify.post = (args: { submission: string | number | { id: string | number } } |
 * @see app/Http/Controllers/Admin/VerificationController.php:116
 * @route '/admin/verifications/{submission}/verify'
 */
-const verifyForm = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const verifyForm = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: verify.url(args, options),
     method: 'post',
 })
@@ -338,7 +338,7 @@ const verifyForm = (args: { submission: string | number | { id: string | number 
 * @see app/Http/Controllers/Admin/VerificationController.php:116
 * @route '/admin/verifications/{submission}/verify'
 */
-verifyForm.post = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+verifyForm.post = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: verify.url(args, options),
     method: 'post',
 })
@@ -350,7 +350,7 @@ verify.form = verifyForm
 * @see app/Http/Controllers/Admin/VerificationController.php:49
 * @route '/admin/verifications/{submission}/approve'
 */
-export const approve = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const approve = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: approve.url(args, options),
     method: 'post',
 })
@@ -365,7 +365,7 @@ approve.definition = {
 * @see app/Http/Controllers/Admin/VerificationController.php:49
 * @route '/admin/verifications/{submission}/approve'
 */
-approve.url = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+approve.url = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { submission: args }
     }
@@ -398,7 +398,7 @@ approve.url = (args: { submission: string | number | { id: string | number } } |
 * @see app/Http/Controllers/Admin/VerificationController.php:49
 * @route '/admin/verifications/{submission}/approve'
 */
-approve.post = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+approve.post = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: approve.url(args, options),
     method: 'post',
 })
@@ -408,7 +408,7 @@ approve.post = (args: { submission: string | number | { id: string | number } } 
 * @see app/Http/Controllers/Admin/VerificationController.php:49
 * @route '/admin/verifications/{submission}/approve'
 */
-const approveForm = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const approveForm = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: approve.url(args, options),
     method: 'post',
 })
@@ -418,7 +418,7 @@ const approveForm = (args: { submission: string | number | { id: string | number
 * @see app/Http/Controllers/Admin/VerificationController.php:49
 * @route '/admin/verifications/{submission}/approve'
 */
-approveForm.post = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+approveForm.post = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: approve.url(args, options),
     method: 'post',
 })
@@ -430,7 +430,7 @@ approve.form = approveForm
 * @see app/Http/Controllers/Admin/VerificationController.php:72
 * @route '/admin/verifications/{submission}/reject'
 */
-export const reject = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+export const reject = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: reject.url(args, options),
     method: 'post',
 })
@@ -445,7 +445,7 @@ reject.definition = {
 * @see app/Http/Controllers/Admin/VerificationController.php:72
 * @route '/admin/verifications/{submission}/reject'
 */
-reject.url = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+reject.url = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { submission: args }
     }
@@ -478,7 +478,7 @@ reject.url = (args: { submission: string | number | { id: string | number } } | 
 * @see app/Http/Controllers/Admin/VerificationController.php:72
 * @route '/admin/verifications/{submission}/reject'
 */
-reject.post = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+reject.post = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: reject.url(args, options),
     method: 'post',
 })
@@ -488,7 +488,7 @@ reject.post = (args: { submission: string | number | { id: string | number } } |
 * @see app/Http/Controllers/Admin/VerificationController.php:72
 * @route '/admin/verifications/{submission}/reject'
 */
-const rejectForm = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+const rejectForm = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: reject.url(args, options),
     method: 'post',
 })
@@ -498,7 +498,7 @@ const rejectForm = (args: { submission: string | number | { id: string | number 
 * @see app/Http/Controllers/Admin/VerificationController.php:72
 * @route '/admin/verifications/{submission}/reject'
 */
-rejectForm.post = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+rejectForm.post = (args: { submission: number | { id: number } } | [submission: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
     action: reject.url(args, options),
     method: 'post',
 })

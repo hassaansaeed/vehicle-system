@@ -20,10 +20,10 @@ class UserSeeder extends Seeder
 
         // Create Admin
         User::updateOrCreate(
-            ['email' => 'admin@vehicleverification.com'],
+            ['email' => 'admin@obaralqaid.com'],
             [
                 'name' => 'Admin User',
-                'email' => 'admin@example.com',
+                'email' => 'admin@obaralqaid.com',
                 'password' => Hash::make('password'),
                 'role_id' => $adminRole->id,
             ]
@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
 
         // Create Reviewer
         User::updateOrCreate(
-            ['email' => 'reviewer@vehicleverification.com'],
+            ['email' => 'reviewer@obaralqaid.com'],
             [
                 'name' => 'Reviewer User',
                 'email' => 'reviewer@example.com',
@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
 
         // Create Regular User
         User::updateOrCreate(
-            ['email' => 'user@vehicleverification.com'],
+            ['email' => 'user@obaralqaid.com'],
             [
                 'name' => 'Regular User',
                 'email' => 'user@example.com',
