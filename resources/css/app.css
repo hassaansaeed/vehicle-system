@@ -141,3 +141,71 @@
         @apply bg-background text-foreground;
     }
 }
+
+/* ==========================================================================
+   RTL / Arabic direction overrides
+   Applied when <body class="rtl"> is toggled by useLocale().
+   We use logical CSS properties (margin-inline-*, padding-inline-*)
+   where possible so intrinsic direction flipping is automatic.
+   ========================================================================== */
+
+body.rtl {
+    /* Use a system Arab font stack instead of the default Latin font */
+    --font-sans:
+        'Segoe UI', 'Tahoma', 'Arial', sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji';
+
+    font-family: var(--font-sans);
+    direction: rtl;
+    text-align: start;
+}
+
+/* Sidebar: flip icon-to-text ordering */
+body.rtl [data-sidebar="menu-button"] {
+    flex-direction: row-reverse;
+}
+
+/* Breadcrumb separator: mirror the chevron in RTL */
+body.rtl [data-breadcrumb="separator"] svg {
+    transform: scaleX(-1);
+}
+
+/* Input icons: swap left-positioned icons to inline-start */
+body.rtl .group .absolute.left-3 {
+    left: unset;
+    right: 0.75rem;
+}
+
+/* Input with leading icon padding */
+body.rtl .group input.pl-10 {
+    padding-left: 1rem;
+    padding-right: 2.5rem;
+}
+
+/* Password toggle eye button */
+body.rtl .group button.absolute.right-3 {
+    right: unset;
+    left: 0.75rem;
+}
+
+/* RTL Specific Icon mirroring */
+body.rtl .rtl\:rotate-180 {
+    transform: rotate(180deg);
+}
+
+/* Wizard STC Phone prefix */
+body.rtl .rtl\:block {
+    display: block !important;
+}
+
+body.rtl .ltr\:block {
+    display: none !important;
+}
+
+body.rtl .rtl\:hidden {
+    display: none !important;
+}
+
+body.rtl .ltr\:hidden {
+    display: block !important;
+}
