@@ -12,8 +12,6 @@ import { register as registerRoute } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
-import { useLocale } from '@/hooks/use-locale';
-import { LanguageSwitcher } from '@/components/language-switcher';
 
 type Props = {
     status?: string;
@@ -27,19 +25,13 @@ export default function Login({
     canRegister,
 }: Props) {
     const [showPassword, setShowPassword] = useState(false);
-    const { t } = useLocale();
 
     return (
         <AuthLayout
-            title={t('auth.login')}
-            description={t('auth.welcome_back')}
+            title="Log in to your account"
+            description="Welcome back! Please enter your details."
         >
-            <Head title={t('auth.login')} />
-
-            {/* Language switcher visible on mobile (desktop shows it in sidebar header) */}
-            <div className="flex justify-end mb-2 lg:hidden">
-                <LanguageSwitcher />
-            </div>
+            <Head title="Log in" />
 
             {status && (
                 <div className="mb-6 p-3 rounded-lg bg-green-50 border border-green-200 text-sm font-medium text-green-600 dark:bg-green-900/20 dark:border-green-800 dark:text-green-400">
@@ -56,7 +48,7 @@ export default function Login({
                     <>
                         <div className="grid gap-5">
                             <div className="grid gap-2">
-                                <Label htmlFor="email" className="font-semibold">{t('auth.email')}</Label>
+                                <Label htmlFor="email" className="font-semibold">Email address</Label>
                                 <div className="relative group">
                                     <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary">
                                         <Mail className="size-4" />
@@ -78,7 +70,7 @@ export default function Login({
 
                             <div className="grid gap-2">
                                 <div className="flex items-center">
-                                    <Label htmlFor="password" className="font-semibold">{t('auth.password')}</Label>
+                                    <Label htmlFor="password" className="font-semibold">Password</Label>
                                 </div>
                                 <div className="relative group">
                                     <div className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary">
@@ -113,9 +105,7 @@ export default function Login({
                                         tabIndex={3}
                                         className="rounded-md border-slate-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
                                     />
-                                    <Label htmlFor="remember" className="text-sm font-medium cursor-pointer select-none">
-                                        {t('auth.remember_me')}
-                                    </Label>
+                                    <Label htmlFor="remember" className="text-sm font-medium cursor-pointer select-none">Remember me</Label>
                                 </div>
 
                                 {canResetPassword && (
@@ -124,7 +114,7 @@ export default function Login({
                                         className="text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
                                         tabIndex={5}
                                     >
-                                        {t('auth.forgot_password')}
+                                        Forgot password?
                                     </TextLink>
                                 )}
                             </div>
@@ -139,19 +129,19 @@ export default function Login({
                                 {processing ? (
                                     <div className="flex items-center gap-2">
                                         <Spinner className="size-4" />
-                                        <span>{t('auth.logging_in')}</span>
+                                        <span>Logging in...</span>
                                     </div>
                                 ) : (
-                                    t('auth.login')
+                                    "Login"
                                 )}
                             </Button>
                         </div>
 
                         {canRegister && (
                             <div className="mt-4 text-center text-sm text-slate-500">
-                                {t('auth.no_account')}{' '}
+                                Don't have an account?{' '}
                                 <TextLink href={registerRoute()} className="font-bold text-slate-900 hover:text-primary transition-colors" tabIndex={5}>
-                                    {t('auth.register')}
+                                    Register
                                 </TextLink>
                             </div>
                         )}

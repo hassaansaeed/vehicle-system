@@ -66,7 +66,7 @@ class VerificationController extends Controller
             ['submission_id' => $submission->id, 'user_id' => $submission->user_id]
         );
 
-        return redirect()->back()->with('success', __('messages.verification_approved'));
+        return redirect()->back()->with('success', 'Submission approved successfully.');
     }
 
     public function reject(Request $request, VerificationSubmission $submission)
@@ -97,7 +97,7 @@ class VerificationController extends Controller
             ]
         );
 
-        return redirect()->back()->with('success', __('messages.verification_rejected'));
+        return redirect()->back()->with('success', 'Submission rejected successfully.');
     }
 
     public function markUnderReview(VerificationSubmission $submission)
@@ -110,7 +110,7 @@ class VerificationController extends Controller
             ['submission_id' => $submission->id]
         );
 
-        return back()->with('success', __('messages.verification_reviewed'));
+        return back()->with('success', 'Submission is now under review.');
     }
 
     public function markVerified(Request $request, VerificationSubmission $submission)
@@ -127,6 +127,6 @@ class VerificationController extends Controller
             ['submission_id' => $submission->id]
         );
 
-        return back()->with('success', __('messages.success'));
+        return back()->with('success', 'Submission has been verified.');
     }
 }

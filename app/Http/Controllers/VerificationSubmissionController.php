@@ -65,7 +65,7 @@ class VerificationSubmissionController extends Controller
         ]);
 
         return redirect()->route('verification.success', ['submission' => $submission->id])
-            ->with('success', __('messages.verification_submitted'));
+            ->with('success', 'Your verification has been submitted successfully!');
     }
 
     public function show($submissionId)
