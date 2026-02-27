@@ -125,7 +125,10 @@ export default function VerificationWizard() {
                 return (
                     form.data.selfie !== '' &&
                     (form.data.stc_phone === '' ||
-                        form.data.stc_phone.length === 9)
+                        (form.data.stc_phone.length === 9 &&
+                            form.data.stc_phone.startsWith('5')) ||
+                        (form.data.stc_phone.length === 10 &&
+                            form.data.stc_phone.startsWith('05')))
                 );
             default:
                 return true;
@@ -547,7 +550,7 @@ export default function VerificationWizard() {
 
                                                 <div className="space-y-2">
                                                     <Label htmlFor="stcPhone">
-                                                        STC Pay Account Number (optional)
+                                                        Saudi Mobile Number / STC Pay (optional)
                                                     </Label>
                                                     <div className="relative">
                                                         <div className="absolute left-3 top-2.5 text-muted-foreground">
@@ -555,20 +558,20 @@ export default function VerificationWizard() {
                                                         </div>
                                                         <Input
                                                             id="stcPhone"
-                                                            placeholder="5XXXXXXXX"
+                                                            placeholder="05XXXXXXXXX"
                                                             className="pl-14"
-                                                            maxLength={9}
+                                                            maxLength={10}
                                                             value={form.data.stc_phone}
                                                             onChange={(e) => {
                                                                 const val = e.target.value.replace(/\D/g, '');
-                                                                if (val.length <= 9) {
+                                                                if (val.length <= 10) {
                                                                     form.setData('stc_phone', val);
                                                                 }
                                                             }}
                                                         />
                                                     </div>
                                                     <p className="text-xs text-muted-foreground">
-                                                        Optional. If provided, enter 9 digits starting with 5.
+                                                        Optional. Enter your Saudi mobile number (e.g., 05XXXXXXXX or 5XXXXXXXX).
                                                     </p>
                                                 </div>
                                             </div>
@@ -591,9 +594,9 @@ export default function VerificationWizard() {
                                                 <div className="grid grid-cols-2 gap-4">
                                                     <div>
                                                         <span className="text-muted-foreground block text-xs uppercase tracking-wider">Name</span>
-                                                            <span className="font-medium">
-                                                                {`${form.data.first_name} ${form.data.last_name}`.trim()}
-                                                            </span>
+                                                        <span className="font-medium">
+                                                            {`${form.data.first_name} ${form.data.last_name}`.trim()}
+                                                        </span>
                                                     </div>
                                                     <div>
                                                         <span className="text-muted-foreground block text-xs uppercase tracking-wider">ID Number</span>

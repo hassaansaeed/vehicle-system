@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\HomepageSetting;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Inertia\Inertia;
@@ -35,7 +36,7 @@ Route::get('verification/success/{submission}', [App\Http\Controllers\Verificati
 // Role-specific Dashboards
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-    
+
     Route::get('user/dashboard', [App\Http\Controllers\DashboardController::class, 'user'])->middleware('role:user')->name('user.dashboard');
     Route::get('reviewer/dashboard', [App\Http\Controllers\DashboardController::class, 'reviewer'])->middleware('role:reviewer')->name('reviewer.dashboard');
     Route::get('admin/dashboard', [App\Http\Controllers\DashboardController::class, 'admin'])->middleware('role:admin')->name('admin.dashboard');
@@ -45,7 +46,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth', 'verified', 'role:admin,reviewer'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('verifications', [App\Http\Controllers\Admin\VerificationController::class, 'index'])->name('verifications.index');
     Route::get('verifications/{submission}', [App\Http\Controllers\Admin\VerificationController::class, 'show'])->name('verifications.show');
-    
+
     // Reviewer/Admin Shared Actions
     Route::post('verifications/{submission}/review', [App\Http\Controllers\Admin\VerificationController::class, 'markUnderReview'])->name('verifications.review');
     Route::post('verifications/{submission}/verify', [App\Http\Controllers\Admin\VerificationController::class, 'markVerified'])->name('verifications.verify');
@@ -54,13 +55,13 @@ Route::middleware(['auth', 'verified', 'role:admin,reviewer'])->prefix('admin')-
     Route::middleware(['role:admin'])->group(function () {
         Route::post('verifications/{submission}/approve', [App\Http\Controllers\Admin\VerificationController::class, 'approve'])->name('verifications.approve');
         Route::post('verifications/{submission}/reject', [App\Http\Controllers\Admin\VerificationController::class, 'reject'])->name('verifications.reject');
-        
+
         // User Management
         Route::get('users', [App\Http\Controllers\Admin\UserController::class, 'index'])->name('users.index');
         Route::post('users', [App\Http\Controllers\Admin\UserController::class, 'store'])->name('users.store');
         Route::patch('users/{user}/toggle', [App\Http\Controllers\Admin\UserController::class, 'toggleStatus'])->name('users.toggle');
         Route::patch('users/{user}/role', [App\Http\Controllers\Admin\UserController::class, 'updateRole'])->name('users.update-role');
-        
+
         // Homepage content
         Route::get('homepage', [App\Http\Controllers\Admin\HomepageController::class, 'edit'])->name('homepage.edit');
         Route::post('homepage', [App\Http\Controllers\Admin\HomepageController::class, 'update'])->name('homepage.update');
@@ -68,6 +69,16 @@ Route::middleware(['auth', 'verified', 'role:admin,reviewer'])->prefix('admin')-
         // Audit Logs
         Route::get('audit-logs', [App\Http\Controllers\Admin\AuditLogController::class, 'index'])->name('audit-logs.index');
     });
+});
+
+Route::get('/clear', function () {
+    Artisan::call('optimize:clear');
+
+    return response()->json([
+        'ok' => true,
+        'message' => 'Caches cleared',
+        'output' => Artisan::output(),
+    ]);
 });
 
 require __DIR__.'/settings.php';

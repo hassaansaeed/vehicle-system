@@ -282,7 +282,7 @@ export default function VerificationShow({ submission }: Props) {
                                 </CardHeader>
                                 <CardContent className="p-6 space-y-4">
                                     <div>
-                                        <Label className="text-muted-foreground text-xs uppercase font-bold">STC Pay Phone</Label>
+                                        <Label className="text-muted-foreground text-xs uppercase font-bold">Saudi Mobile (STC Pay)</Label>
                                         <div className="flex items-center gap-2 mt-1">
                                             <div className="bg-green-100 text-green-700 rounded-lg px-2 py-1 text-xs font-bold font-mono">
                                                 Saudi Arabia (+966)
