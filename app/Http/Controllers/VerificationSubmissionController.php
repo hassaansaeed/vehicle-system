@@ -23,14 +23,12 @@ class VerificationSubmissionController extends Controller
             'vehicle_registration' => 'required|file|image|max:5120',
             'vehicle_sequence_number' => 'required|string|max:50',
             'selfie' => 'required|string', // Base64 data URL
-            'stc_phone' => 'nullable|string|size:9|regex:/^5[0-9]{8}$/',
+            'stc_phone' => 'nullable|string|max:50',
         ], [
             'id_number.unique' => 'This ID number has already been submitted.',
             'id_number.size' => 'ID number must be exactly 10 digits.',
             'date_of_birth.before' => 'Date of birth must be in the past.',
             'license_expiry.after' => 'License expiry date must be in the future.',
-            'stc_phone.regex' => 'STC phone number must start with 5 and be 9 digits.',
-            'stc_phone.size' => 'STC phone number must be exactly 9 digits.',
         ]);
 
         // Handle file uploads

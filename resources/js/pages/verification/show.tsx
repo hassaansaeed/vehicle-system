@@ -131,8 +131,8 @@ export default function VerificationShow({ submission }: Props) {
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div>
-                                <Label className="text-muted-foreground">STC Pay Phone</Label>
-                                <p className="font-medium">+966 {submission.stc_phone}</p>
+                                <Label className="text-muted-foreground">STC Pay Number</Label>
+                                <p className="font-medium">{submission.stc_phone}</p>
                             </div>
                         </CardContent>
                     </Card>

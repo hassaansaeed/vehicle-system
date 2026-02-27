@@ -21,20 +21,17 @@ import {
     X,
     AlertCircle,
 } from 'lucide-react';
-import { useLocale } from '@/hooks/use-locale';
-import { LanguageSwitcher } from '@/components/language-switcher';
+
+const steps = [
+    { number: 1, title: 'Personal Info', icon: User },
+    { number: 2, title: 'Identity', icon: FileText },
+    { number: 3, title: 'Vehicle', icon: CreditCard },
+    { number: 4, title: 'Verify', icon: ShieldCheck },
+    { number: 5, title: 'Review', icon: CheckCircle },
+];
 
 export default function VerificationWizard() {
-    const { t } = useLocale();
     const [step, setStep] = useState(1);
-
-    const steps = [
-        { number: 1, title: t('wizard.personal_info'), icon: User },
-        { number: 2, title: t('wizard.identity'), icon: FileText },
-        { number: 3, title: t('wizard.vehicle'), icon: CreditCard },
-        { number: 4, title: t('wizard.verify'), icon: ShieldCheck },
-        { number: 5, title: t('wizard.review'), icon: CheckCircle },
-    ];
 
     const form = useForm({
         gender: '',
@@ -126,9 +123,7 @@ export default function VerificationWizard() {
                 );
             case 4:
                 return (
-                    form.data.selfie !== '' &&
-                    (form.data.stc_phone === '' ||
-                        form.data.stc_phone.length === 9)
+                    form.data.selfie !== ''
                 );
             default:
                 return true;
@@ -236,9 +231,8 @@ export default function VerificationWizard() {
             <div className="flex min-h-screen flex-col bg-background font-sans antialiased">
                 {/* Header */}
                 <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                    <div className="container flex h-14 items-center justify-between px-8">
+                    <div className="container flex h-14 items-center pl-8">
                         <span className="font-bold">Vehicle Verification</span>
-                        <LanguageSwitcher />
                     </div>
                     {/* Progress Bar */}
                     <div className="h-1 w-full bg-secondary">
@@ -298,16 +292,16 @@ export default function VerificationWizard() {
                                         <div className="space-y-6 animate-in slide-in-from-right-4 fade-in duration-500">
                                             <div className="space-y-2">
                                                 <h2 className="text-2xl font-bold tracking-tight">
-                                                    {t('wizard.personal_info')}
+                                                    Personal Information
                                                 </h2>
                                                 <p className="text-muted-foreground">
-                                                    {t('wizard.personal_details_desc')}
+                                                    Please provide your personal details as they appear on your ID.
                                                 </p>
                                             </div>
 
                                             <div className="space-y-4">
                                                 <div className="space-y-2">
-                                                    <Label>{t('wizard.gender')}</Label>
+                                                    <Label>Gender</Label>
                                                     <div className="flex gap-4">
                                                         {['male', 'female'].map(
                                                             (g) => (
@@ -327,7 +321,7 @@ export default function VerificationWizard() {
                                                                         className="sr-only"
                                                                     />
                                                                     <span className="capitalize font-medium">
-                                                                        {t(`wizard.${g}`)}
+                                                                        {g}
                                                                     </span>
                                                                 </label>
                                                             )
@@ -338,11 +332,11 @@ export default function VerificationWizard() {
                                                 <div className="grid gap-4 sm:grid-cols-2">
                                                     <div className="space-y-2">
                                                         <Label htmlFor="firstName">
-                                                            {t('wizard.first_name')}
+                                                            First Name
                                                         </Label>
                                                         <Input
                                                             id="firstName"
-                                                            placeholder={t('wizard.confirm')}
+                                                            placeholder="As on ID"
                                                             value={form.data.first_name}
                                                             onChange={(e) =>
                                                                 form.setData('first_name', e.target.value)
@@ -351,11 +345,11 @@ export default function VerificationWizard() {
                                                     </div>
                                                     <div className="space-y-2">
                                                         <Label htmlFor="lastName">
-                                                            {t('wizard.last_name')}
+                                                            Last Name
                                                         </Label>
                                                         <Input
                                                             id="lastName"
-                                                            placeholder={t('wizard.confirm')}
+                                                            placeholder="As on ID"
                                                             value={form.data.last_name}
                                                             onChange={(e) =>
                                                                 form.setData('last_name', e.target.value)
@@ -367,7 +361,7 @@ export default function VerificationWizard() {
                                                 <div className="grid gap-4 sm:grid-cols-2">
                                                     <div className="space-y-2">
                                                         <Label htmlFor="dob">
-                                                            {t('wizard.dob')}
+                                                            Date of Birth
                                                         </Label>
                                                         <Input
                                                             id="dob"
@@ -381,11 +375,11 @@ export default function VerificationWizard() {
                                                     </div>
                                                     <div className="space-y-2">
                                                         <Label htmlFor="idNumber">
-                                                            {t('wizard.id_number')}
+                                                            ID Number
                                                         </Label>
                                                         <Input
                                                             id="idNumber"
-                                                            placeholder={t('wizard.id_number_desc')}
+                                                            placeholder="10-digit National ID"
                                                             maxLength={10}
                                                             value={form.data.id_number}
                                                             onChange={(e) => {
@@ -394,7 +388,7 @@ export default function VerificationWizard() {
                                                             }}
                                                         />
                                                         <p className="text-xs text-muted-foreground">
-                                                            {t('wizard.id_number_hint')}
+                                                            Must be 10 digits
                                                         </p>
                                                     </div>
                                                 </div>
@@ -407,29 +401,29 @@ export default function VerificationWizard() {
                                         <div className="space-y-6 animate-in slide-in-from-right-4 fade-in duration-500">
                                             <div className="space-y-2">
                                                 <h2 className="text-2xl font-bold tracking-tight">
-                                                    {t('wizard.identity')}
+                                                    Identity Verification
                                                 </h2>
                                                 <p className="text-muted-foreground">
-                                                    {t('wizard.identity_desc')}
+                                                    Upload clear photos of your ID and Driver's License.
                                                 </p>
                                             </div>
 
                                             <div className="grid gap-6 sm:grid-cols-1">
                                                 <FileUpload
-                                                    label={t('wizard.id_front')}
+                                                    label="National ID (Front)"
                                                     file={files.idFront}
                                                     onChange={(f) => handleFileChange('idFront', f)}
                                                 />
 
                                                 <FileUpload
-                                                    label={t('wizard.license_front')}
+                                                    label="Driver's License (Front)"
                                                     file={files.licenseFront}
                                                     onChange={(f) => handleFileChange('licenseFront', f)}
                                                 />
 
                                                 <div className="space-y-2">
                                                     <Label htmlFor="licenseExpiry">
-                                                        {t('wizard.license_expiry')}
+                                                        License Expiry Date
                                                     </Label>
                                                     <Input
                                                         id="licenseExpiry"
@@ -447,23 +441,23 @@ export default function VerificationWizard() {
                                         <div className="space-y-6 animate-in slide-in-from-right-4 fade-in duration-500">
                                             <div className="space-y-2">
                                                 <h2 className="text-2xl font-bold tracking-tight">
-                                                    {t('wizard.vehicle')}
+                                                    Vehicle Information
                                                 </h2>
                                                 <p className="text-muted-foreground">
-                                                    {t('wizard.vehicle_desc')}
+                                                    Provide details about the vehicle you wish to register.
                                                 </p>
                                             </div>
 
                                             <div className="space-y-6">
                                                 <FileUpload
-                                                    label={t('wizard.vehicle_registration')}
+                                                    label="Vehicle Registration Card (Istimara)"
                                                     file={files.vehicleRegistration}
                                                     onChange={(f) => handleFileChange('vehicleRegistration', f)}
                                                 />
 
                                                 <div className="space-y-2">
                                                     <Label htmlFor="vehicleSequence">
-                                                        {t('wizard.vehicle_sequence')}
+                                                        Vehicle Sequence Number
                                                     </Label>
                                                     <Input
                                                         id="vehicleSequence"
@@ -472,7 +466,7 @@ export default function VerificationWizard() {
                                                         onChange={(e) => form.setData('vehicle_sequence_number', e.target.value)}
                                                     />
                                                     <p className="text-xs text-muted-foreground">
-                                                        {t('wizard.vehicle_sequence_hint')}
+                                                        Found on your registration card
                                                     </p>
                                                 </div>
                                             </div>
@@ -484,17 +478,17 @@ export default function VerificationWizard() {
                                         <div className="space-y-6 animate-in slide-in-from-right-4 fade-in duration-500">
                                             <div className="space-y-2">
                                                 <h2 className="text-2xl font-bold tracking-tight">
-                                                    {t('wizard.verify')}
+                                                    Final Verification
                                                 </h2>
                                                 <p className="text-muted-foreground">
-                                                    {t('wizard.final_verify_desc')}
+                                                    We need to verify your identity with a quick selfie.
                                                 </p>
                                             </div>
 
                                             <div className="space-y-6">
                                                 {/* Selfie Section */}
                                                 <div className="rounded-lg border bg-muted/30 p-4">
-                                                    <Label className="mb-2 block">{t('wizard.take_selfie')}</Label>
+                                                    <Label className="mb-2 block">Take a Selfie</Label>
 
                                                     {form.data.selfie ? (
                                                         <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-black">
@@ -510,7 +504,7 @@ export default function VerificationWizard() {
                                                                 className="absolute right-2 top-2"
                                                                 onClick={() => form.setData('selfie', '')}
                                                             >
-                                                                {t('wizard.retake')}
+                                                                Retake
                                                             </Button>
                                                         </div>
                                                     ) : (
@@ -523,7 +517,7 @@ export default function VerificationWizard() {
                                                                 onClick={startCamera}
                                                                 className="mb-2"
                                                             >
-                                                                {t('wizard.open_camera')}
+                                                                Open Camera (Full Screen)
                                                             </Button>
                                                             {cameraError && (
                                                                 <p className="mt-2 text-sm text-destructive flex items-center gap-1">
@@ -531,7 +525,7 @@ export default function VerificationWizard() {
                                                                 </p>
                                                             )}
                                                             <p className="text-xs mb-2">
-                                                                {t('wizard.camera_hint')}
+                                                                Use your camera or upload an existing photo.
                                                             </p>
                                                             <input
                                                                 type="file"
@@ -551,31 +545,20 @@ export default function VerificationWizard() {
 
                                                 <div className="space-y-2">
                                                     <Label htmlFor="stcPhone">
-                                                        {t('wizard.stc_phone')}
+                                                        STC Pay Number (optional)
                                                     </Label>
                                                     <div className="relative">
-                                                        <div className="absolute left-3 top-2.5 text-muted-foreground ltr:block rtl:hidden">
-                                                            +966
-                                                        </div>
-                                                        <div className="absolute right-3 top-2.5 text-muted-foreground rtl:block ltr:hidden">
-                                                            +966
-                                                        </div>
                                                         <Input
                                                             id="stcPhone"
-                                                            placeholder="5XXXXXXXX"
-                                                            className="ltr:pl-14 rtl:pr-14"
-                                                            maxLength={9}
+                                                            placeholder="Enter STC Pay number"
                                                             value={form.data.stc_phone}
                                                             onChange={(e) => {
-                                                                const val = e.target.value.replace(/\D/g, '');
-                                                                if (val.length <= 9) {
-                                                                    form.setData('stc_phone', val);
-                                                                }
+                                                                form.setData('stc_phone', e.target.value);
                                                             }}
                                                         />
                                                     </div>
                                                     <p className="text-xs text-muted-foreground">
-                                                        {t('wizard.stc_phone')}
+                                                        Optional. If provided, enter your STC Pay account number.
                                                     </p>
                                                 </div>
                                             </div>
@@ -587,50 +570,48 @@ export default function VerificationWizard() {
                                         <div className="space-y-6 animate-in slide-in-from-right-4 fade-in duration-500 text-sm">
                                             <div className="space-y-2">
                                                 <h2 className="text-2xl font-bold tracking-tight">
-                                                    {t('wizard.confirm_submit')}
+                                                    Confirm & Submit
                                                 </h2>
                                                 <p className="text-muted-foreground">
-                                                    {t('wizard.review_desc')}
+                                                    Please review your information before submitting.
                                                 </p>
                                             </div>
 
                                             <div className="grid gap-6 rounded-lg border p-4 bg-muted/20">
                                                 <div className="grid grid-cols-2 gap-4">
                                                     <div>
-                                                        <span className="text-muted-foreground block text-xs uppercase tracking-wider">{t('auth.full_name')}</span>
+                                                        <span className="text-muted-foreground block text-xs uppercase tracking-wider">Name</span>
                                                         <span className="font-medium">
                                                             {`${form.data.first_name} ${form.data.last_name}`.trim()}
                                                         </span>
                                                     </div>
                                                     <div>
-                                                        <span className="text-muted-foreground block text-xs uppercase tracking-wider">{t('wizard.id_number')}</span>
-                                                        <span className="font-medium">{form.data.id_number} ({t(`wizard.${form.data.gender}`)})</span>
+                                                        <span className="text-muted-foreground block text-xs uppercase tracking-wider">ID Number</span>
+                                                        <span className="font-medium">{form.data.id_number} ({form.data.gender})</span>
                                                     </div>
                                                     <div>
-                                                        <span className="text-muted-foreground block text-xs uppercase tracking-wider">{t('wizard.dob')}</span>
+                                                        <span className="text-muted-foreground block text-xs uppercase tracking-wider">DOB</span>
                                                         <span className="font-medium">{form.data.date_of_birth}</span>
                                                     </div>
                                                     <div>
-                                                        <span className="text-muted-foreground block text-xs uppercase tracking-wider">{t('nav.home')}</span>
+                                                        <span className="text-muted-foreground block text-xs uppercase tracking-wider">STC Pay Number</span>
                                                         <span className="font-medium text-primary">
-                                                            {form.data.stc_phone
-                                                                ? `+966 ${form.data.stc_phone}`
-                                                                : 'Not provided'}
+                                                            {form.data.stc_phone || 'Not provided'}
                                                         </span>
                                                     </div>
                                                 </div>
 
                                                 <div className="space-y-2 border-t pt-4">
-                                                    <span className="text-muted-foreground block text-xs uppercase tracking-wider mb-2">{t('wizard.attached_docs')}</span>
+                                                    <span className="text-muted-foreground block text-xs uppercase tracking-wider mb-2">Attached Documents</span>
                                                     <div className="grid grid-cols-3 gap-2">
-                                                        {files.idFront && <PreviewImage src={files.idFront} label={t('wizard.id_front')} />}
-                                                        {files.licenseFront && <PreviewImage src={files.licenseFront} label={t('wizard.license_front')} />}
+                                                        {files.idFront && <PreviewImage src={files.idFront} label="ID Front" />}
+                                                        {files.licenseFront && <PreviewImage src={files.licenseFront} label="License" />}
                                                         {form.data.selfie && <PreviewImage src={form.data.selfie} label="Selfie" />}
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div className="flex items-center space-x-2 pt-2 gap-2">
+                                            <div className="flex items-center space-x-2 pt-2">
                                                 <Checkbox
                                                     id="terms"
                                                     checked={termsAccepted}
@@ -640,7 +621,7 @@ export default function VerificationWizard() {
                                                     htmlFor="terms"
                                                     className="text-sm font-normal leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                                 >
-                                                    {t('wizard.terms_agree')}
+                                                    I agree to the <a href="#" className="underline text-primary">Terms of Service</a> and <a href="#" className="underline text-primary">Privacy Policy</a>.
                                                 </Label>
                                             </div>
                                         </div>
@@ -655,7 +636,7 @@ export default function VerificationWizard() {
                                             disabled={step === 1}
                                             className={step === 1 ? 'invisible' : ''}
                                         >
-                                            <ArrowLeft className="mx-2 h-4 w-4 rtl:rotate-180" /> {t('wizard.back')}
+                                            <ArrowLeft className="mr-2 h-4 w-4" /> Back
                                         </Button>
 
                                         {step < 5 ? (
@@ -665,7 +646,7 @@ export default function VerificationWizard() {
                                                 disabled={!isStepValid(step)}
                                                 className="bg-primary text-white shadow-lg shadow-primary/20 disabled:opacity-50"
                                             >
-                                                {t('wizard.next')} <ChevronRight className="mx-2 h-4 w-4 rtl:rotate-180" />
+                                                Next Step <ChevronRight className="ml-2 h-4 w-4" />
                                             </Button>
                                         ) : (
                                             <Button
@@ -673,8 +654,8 @@ export default function VerificationWizard() {
                                                 className="bg-green-600 text-white hover:bg-green-700 shadow-lg shadow-green-600/20"
                                                 disabled={!termsAccepted || form.processing}
                                             >
-                                                {form.processing ? t('wizard.submitting') : t('wizard.submit')}
-                                                {!form.processing && <CheckCircle className="mx-2 h-4 w-4" />}
+                                                {form.processing ? 'Submitting...' : 'Submit Application'}
+                                                {!form.processing && <CheckCircle className="ml-2 h-4 w-4" />}
                                             </Button>
                                         )}
                                     </div>
