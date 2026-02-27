@@ -3,6 +3,8 @@ import { Shield, Activity, Car, ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { dashboard, login, register } from '@/routes';
 import type { SharedData } from '@/types';
+import { useLocale } from '@/hooks/use-locale';
+import { LanguageSwitcher } from '@/components/language-switcher';
 
 type HomepageContent = {
     title: string | null;
@@ -19,6 +21,7 @@ export default function Welcome({
     homepage?: HomepageContent;
 }) {
     const { auth, name } = usePage<SharedData>().props;
+    const { t } = useLocale();
 
     const title = homepage?.title ?? 'Vehicle & Identity';
     const heading = homepage?.heading ?? 'Verification Portal';
@@ -29,7 +32,7 @@ export default function Welcome({
 
     return (
         <>
-            <Head title="Vehicle & Identity Verification Portal" />
+            <Head title={`${title} ${heading}`} />
 
             <div className="min-h-screen bg-background text-foreground flex flex-col relative overflow-hidden font-sans antialiased">
                 {/* Minimal Background Gradient */}
@@ -48,23 +51,24 @@ export default function Welcome({
                     </div>
 
                     <nav className="flex items-center gap-4">
+                        <LanguageSwitcher />
                         {auth.user ? (
                             <Link href={dashboard()}>
                                 <Button variant="ghost" size="sm" className="hidden sm:inline-flex">
-                                    Dashboard
+                                    {t('nav.dashboard')}
                                 </Button>
                             </Link>
                         ) : (
                             <>
                                 <Link href={login()}>
                                     <Button variant="ghost" size="sm">
-                                        Log in
+                                        {t('auth.login')}
                                     </Button>
                                 </Link>
                                 {canRegister && (
                                     <Link href={register()}>
                                         <Button size="sm" className="shadow-sm">
-                                            Sign Up
+                                            {t('auth.register')}
                                         </Button>
                                     </Link>
                                 )}
@@ -93,7 +97,7 @@ export default function Welcome({
                         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
                             <Link href="/verification">
                                 <Button size="lg" className="h-14 px-8 text-lg rounded-full shadow-xl shadow-primary/20 hover:shadow-primary/30 transition-all hover:scale-105">
-                                    Start Verification <ArrowRight className="ml-2 h-5 w-5" />
+                                    {t('landing.start_verification')} <ArrowRight className="ml-2 h-5 w-5 rtl:rotate-180" />
                                 </Button>
                             </Link>
                         </div>
@@ -103,7 +107,7 @@ export default function Welcome({
                             <div className="pt-6 flex justify-center">
                                 <img
                                     src={imageUrl}
-                                    alt={heading}
+                                    alt={heading || 'Hero'}
                                     className="max-h-72 rounded-2xl border border-border/60 bg-muted object-cover shadow-xl"
                                 />
                             </div>
@@ -112,13 +116,13 @@ export default function Welcome({
                         {/* Trust Indicators (Minimal) */}
                         <div className="pt-12 flex flex-wrap justify-center gap-8 text-sm text-muted-foreground/80">
                             <div className="flex items-center gap-2">
-                                <CheckCircle className="h-4 w-4 text-green-500" /> Government Compliant
+                                <CheckCircle className="h-4 w-4 text-green-500" /> {t('landing.government_compliant')}
                             </div>
                             <div className="flex items-center gap-2">
-                                <Shield className="h-4 w-4 text-primary" /> End-to-End Encryption
+                                <Shield className="h-4 w-4 text-primary" /> {t('landing.encryption')}
                             </div>
                             <div className="flex items-center gap-2">
-                                <Activity className="h-4 w-4 text-secondary" /> Real-time Processing
+                                <Activity className="h-4 w-4 text-secondary" /> {t('landing.real_time')}
                             </div>
                         </div>
                     </div>
@@ -128,12 +132,12 @@ export default function Welcome({
                 <footer className="relative z-10 py-8 border-t border-border/40 bg-background/30 backdrop-blur-sm mt-auto">
                     <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
                         <p className="text-sm text-muted-foreground">
-                            &copy; {new Date().getFullYear()} {name}. All rights reserved.
+                            &copy; {new Date().getFullYear()} {name}. {t('landing.rights_reserved')}
                         </p>
                         <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm text-muted-foreground">
-                            <Link href="#" className="hover:text-primary transition-colors">Privacy Policy</Link>
-                            <Link href="#" className="hover:text-primary transition-colors">Terms & Conditions</Link>
-                            <Link href="#" className="hover:text-primary transition-colors">Support</Link>
+                            <Link href="#" className="hover:text-primary transition-colors">{t('landing.privacy')}</Link>
+                            <Link href="#" className="hover:text-primary transition-colors">{t('landing.terms')}</Link>
+                            <Link href="#" className="hover:text-primary transition-colors">{t('landing.support')}</Link>
                         </div>
                     </div>
                 </footer>
@@ -141,3 +145,4 @@ export default function Welcome({
         </>
     );
 }
+

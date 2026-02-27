@@ -1,9 +1,11 @@
 import { Breadcrumbs } from '@/components/breadcrumbs';
+import { LanguageSwitcher } from '@/components/language-switcher';
 import { SidebarTrigger } from '@/components/ui/sidebar';
 import type { BreadcrumbItem as BreadcrumbItemType, SharedData } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { Badge } from '@/components/ui/badge';
 import { Shield } from 'lucide-react';
+import { useLocale } from '@/hooks/use-locale';
 
 export function AppSidebarHeader({
     breadcrumbs = [],
@@ -11,6 +13,7 @@ export function AppSidebarHeader({
     breadcrumbs?: BreadcrumbItemType[];
 }) {
     const { auth } = usePage<SharedData>().props;
+    const { t } = useLocale();
     const role = auth.user?.role?.name || 'user';
 
     const getRoleStyles = (role: string) => {
@@ -28,10 +31,14 @@ export function AppSidebarHeader({
                 <Breadcrumbs breadcrumbs={breadcrumbs} />
             </div>
 
-            <div className="flex items-center gap-2">
-                <Badge variant="outline" className={`hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${getRoleStyles(role)}`}>
+            <div className="flex items-center gap-3">
+                <LanguageSwitcher />
+                <Badge
+                    variant="outline"
+                    className={`hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${getRoleStyles(role)}`}
+                >
                     <Shield className="h-3 w-3" />
-                    Logged in as {role}
+                    {t('sidebar.logged_in_as', { role })}
                 </Badge>
             </div>
         </header>
