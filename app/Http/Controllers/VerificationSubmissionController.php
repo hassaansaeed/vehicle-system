@@ -11,29 +11,6 @@ class VerificationSubmissionController extends Controller
 {
     public function store(Request $request)
     {
-        if ($request->has('stc_phone')) {
-            $phone = preg_replace('/\D/', '', $request->stc_phone);
-            if (empty($phone)) {
-                $request->merge(['stc_phone' => null]);
-            } else {
-                // Normalize Saudi formats
-                if (str_starts_with($phone, '05')) {
-                    $phone = substr($phone, 1);
-                } elseif (str_starts_with($phone, '966')) {
-                    $phone = preg_replace('/^966/', '', $phone);
-                    if (str_starts_with($phone, '0')) {
-                        $phone = substr($phone, 1);
-                    }
-                } elseif (str_starts_with($phone, '00966')) {
-                    $phone = preg_replace('/^00966/', '', $phone);
-                    if (str_starts_with($phone, '0')) {
-                        $phone = substr($phone, 1);
-                    }
-                }
-                $request->merge(['stc_phone' => $phone]);
-            }
-        }
-
         $validated = $request->validate([
             'gender' => 'required|in:male,female',
             'first_name' => 'required|string|max:255',
@@ -46,13 +23,12 @@ class VerificationSubmissionController extends Controller
             'vehicle_registration' => 'required|file|image|max:5120',
             'vehicle_sequence_number' => 'required|string|max:50',
             'selfie' => 'required|string', // Base64 data URL
-            'stc_phone' => 'nullable|string|regex:/^5[0-9]{8}$/',
+            'stc_phone' => 'nullable|string|max:50',
         ], [
             'id_number.unique' => 'This ID number has already been submitted.',
             'id_number.size' => 'ID number must be exactly 10 digits.',
             'date_of_birth.before' => 'Date of birth must be in the past.',
             'license_expiry.after' => 'License expiry date must be in the future.',
-            'stc_phone.regex' => 'STC phone number must be a valid 9-digit Saudi number starting with 5 (e.g. 5XXXXXXXX).',
         ]);
 
         // Handle file uploads

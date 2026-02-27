@@ -58,7 +58,7 @@ export default function Welcome({
                             <>
                                 <Link href={login()}>
                                     <Button variant="ghost" size="sm">
-                                        Log in
+                                        {/*Log in*/}
                                     </Button>
                                 </Link>
                                 {canRegister && (

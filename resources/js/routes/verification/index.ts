@@ -292,7 +292,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::show
-* @see app/Http/Controllers/VerificationSubmissionController.php:73
+* @see app/Http/Controllers/VerificationSubmissionController.php:71
 * @route '/verification/show/{submission}'
 */
 export const show = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -307,7 +307,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::show
-* @see app/Http/Controllers/VerificationSubmissionController.php:73
+* @see app/Http/Controllers/VerificationSubmissionController.php:71
 * @route '/verification/show/{submission}'
 */
 show.url = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -334,7 +334,7 @@ show.url = (args: { submission: string | number } | [submission: string | number
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::show
-* @see app/Http/Controllers/VerificationSubmissionController.php:73
+* @see app/Http/Controllers/VerificationSubmissionController.php:71
 * @route '/verification/show/{submission}'
 */
 show.get = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -344,7 +344,7 @@ show.get = (args: { submission: string | number } | [submission: string | number
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::show
-* @see app/Http/Controllers/VerificationSubmissionController.php:73
+* @see app/Http/Controllers/VerificationSubmissionController.php:71
 * @route '/verification/show/{submission}'
 */
 show.head = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -354,7 +354,7 @@ show.head = (args: { submission: string | number } | [submission: string | numbe
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::show
-* @see app/Http/Controllers/VerificationSubmissionController.php:73
+* @see app/Http/Controllers/VerificationSubmissionController.php:71
 * @route '/verification/show/{submission}'
 */
 const showForm = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -364,7 +364,7 @@ const showForm = (args: { submission: string | number } | [submission: string | 
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::show
-* @see app/Http/Controllers/VerificationSubmissionController.php:73
+* @see app/Http/Controllers/VerificationSubmissionController.php:71
 * @route '/verification/show/{submission}'
 */
 showForm.get = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -374,7 +374,7 @@ showForm.get = (args: { submission: string | number } | [submission: string | nu
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::show
-* @see app/Http/Controllers/VerificationSubmissionController.php:73
+* @see app/Http/Controllers/VerificationSubmissionController.php:71
 * @route '/verification/show/{submission}'
 */
 showForm.head = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -391,7 +391,7 @@ show.form = showForm
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::success
-* @see app/Http/Controllers/VerificationSubmissionController.php:94
+* @see app/Http/Controllers/VerificationSubmissionController.php:92
 * @route '/verification/success/{submission}'
 */
 export const success = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -406,7 +406,7 @@ success.definition = {
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::success
-* @see app/Http/Controllers/VerificationSubmissionController.php:94
+* @see app/Http/Controllers/VerificationSubmissionController.php:92
 * @route '/verification/success/{submission}'
 */
 success.url = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -433,7 +433,7 @@ success.url = (args: { submission: string | number } | [submission: string | num
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::success
-* @see app/Http/Controllers/VerificationSubmissionController.php:94
+* @see app/Http/Controllers/VerificationSubmissionController.php:92
 * @route '/verification/success/{submission}'
 */
 success.get = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -443,7 +443,7 @@ success.get = (args: { submission: string | number } | [submission: string | num
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::success
-* @see app/Http/Controllers/VerificationSubmissionController.php:94
+* @see app/Http/Controllers/VerificationSubmissionController.php:92
 * @route '/verification/success/{submission}'
 */
 success.head = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -453,7 +453,7 @@ success.head = (args: { submission: string | number } | [submission: string | nu
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::success
-* @see app/Http/Controllers/VerificationSubmissionController.php:94
+* @see app/Http/Controllers/VerificationSubmissionController.php:92
 * @route '/verification/success/{submission}'
 */
 const successForm = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -463,7 +463,7 @@ const successForm = (args: { submission: string | number } | [submission: string
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::success
-* @see app/Http/Controllers/VerificationSubmissionController.php:94
+* @see app/Http/Controllers/VerificationSubmissionController.php:92
 * @route '/verification/success/{submission}'
 */
 successForm.get = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -473,7 +473,7 @@ successForm.get = (args: { submission: string | number } | [submission: string |
 
 /**
 * @see \App\Http\Controllers\VerificationSubmissionController::success
-* @see app/Http/Controllers/VerificationSubmissionController.php:94
+* @see app/Http/Controllers/VerificationSubmissionController.php:92
 * @route '/verification/success/{submission}'
 */
 successForm.head = (args: { submission: string | number } | [submission: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

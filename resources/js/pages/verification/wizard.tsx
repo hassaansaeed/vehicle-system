@@ -123,12 +123,7 @@ export default function VerificationWizard() {
                 );
             case 4:
                 return (
-                    form.data.selfie !== '' &&
-                    (form.data.stc_phone === '' ||
-                        (form.data.stc_phone.length === 9 &&
-                            form.data.stc_phone.startsWith('5')) ||
-                        (form.data.stc_phone.length === 10 &&
-                            form.data.stc_phone.startsWith('05')))
+                    form.data.selfie !== ''
                 );
             default:
                 return true;
@@ -550,28 +545,20 @@ export default function VerificationWizard() {
 
                                                 <div className="space-y-2">
                                                     <Label htmlFor="stcPhone">
-                                                        Saudi Mobile Number / STC Pay (optional)
+                                                        STC Pay Number (optional)
                                                     </Label>
                                                     <div className="relative">
-                                                        <div className="absolute left-3 top-2.5 text-muted-foreground">
-                                                            +966
-                                                        </div>
                                                         <Input
                                                             id="stcPhone"
-                                                            placeholder="05XXXXXXXXX"
-                                                            className="pl-14"
-                                                            maxLength={10}
+                                                            placeholder="Enter STC Pay number"
                                                             value={form.data.stc_phone}
                                                             onChange={(e) => {
-                                                                const val = e.target.value.replace(/\D/g, '');
-                                                                if (val.length <= 10) {
-                                                                    form.setData('stc_phone', val);
-                                                                }
+                                                                form.setData('stc_phone', e.target.value);
                                                             }}
                                                         />
                                                     </div>
                                                     <p className="text-xs text-muted-foreground">
-                                                        Optional. Enter your Saudi mobile number (e.g., 05XXXXXXXX or 5XXXXXXXX).
+                                                        Optional. If provided, enter your STC Pay account number.
                                                     </p>
                                                 </div>
                                             </div>
@@ -607,11 +594,9 @@ export default function VerificationWizard() {
                                                         <span className="font-medium">{form.data.date_of_birth}</span>
                                                     </div>
                                                     <div>
-                                                        <span className="text-muted-foreground block text-xs uppercase tracking-wider">Phone</span>
+                                                        <span className="text-muted-foreground block text-xs uppercase tracking-wider">STC Pay Number</span>
                                                         <span className="font-medium text-primary">
-                                                            {form.data.stc_phone
-                                                                ? `+966 ${form.data.stc_phone}`
-                                                                : 'Not provided'}
+                                                            {form.data.stc_phone || 'Not provided'}
                                                         </span>
                                                     </div>
                                                 </div>
