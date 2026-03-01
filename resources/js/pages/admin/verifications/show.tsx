@@ -21,8 +21,9 @@ import {
     History
 } from 'lucide-react';
 import { format } from 'date-fns';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import AppLayout from '@/layouts/app-layout';
+import { useLocale } from '@/hooks/use-locale';
 import type { BreadcrumbItem, SharedData } from '@/types';
 import {
     Dialog,
@@ -60,19 +61,20 @@ type Props = {
     submission: Submission;
 };
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Dashboard',
-        href: '/dashboard',
-    },
-    {
-        title: 'Verification Submissions',
-        href: '/admin/verifications',
-    },
-];
-
 export default function VerificationShow({ submission }: Props) {
+    const { t, dir } = useLocale();
     const { auth } = usePage<SharedData>().props;
+
+    const breadcrumbs: BreadcrumbItem[] = useMemo(() => [
+        {
+            title: t('nav.dashboard'),
+            href: '/dashboard',
+        },
+        {
+            title: t('nav.verifications'),
+            href: '/admin/verifications',
+        },
+    ], [t]);
     const role = auth.user?.role?.name;
     const isAdmin = role === 'admin';
     const isReviewer = role === 'reviewer';
@@ -129,11 +131,11 @@ export default function VerificationShow({ submission }: Props) {
 
     const getStatusBadge = (status: string) => {
         const variants = {
-            pending: { variant: 'secondary' as const, icon: null, text: 'Pending Review', color: 'bg-yellow-100 text-yellow-700' },
-            under_review: { variant: 'secondary' as const, icon: Search, text: 'Under Review', color: 'bg-blue-100 text-blue-700' },
-            verified: { variant: 'secondary' as const, icon: ShieldCheck, text: 'Verified', color: 'bg-purple-100 text-purple-700' },
-            approved: { variant: 'default' as const, icon: CheckCircle, text: 'Approved', color: 'bg-green-100 text-green-700' },
-            rejected: { variant: 'destructive' as const, icon: XCircle, text: 'Rejected', color: 'bg-red-100 text-red-700' },
+            pending: { variant: 'secondary' as const, icon: null, text: t('wizard.verify'), color: 'bg-yellow-100 text-yellow-700' },
+            under_review: { variant: 'secondary' as const, icon: Search, text: t('wizard.personal_details_desc'), color: 'bg-blue-100 text-blue-700' },
+            verified: { variant: 'secondary' as const, icon: ShieldCheck, text: t('wizard.verify'), color: 'bg-purple-100 text-purple-700' },
+            approved: { variant: 'default' as const, icon: CheckCircle, text: t('success.status'), color: 'bg-green-100 text-green-700' },
+            rejected: { variant: 'destructive' as const, icon: XCircle, text: t('wizard.rejected') || 'Rejected', color: 'bg-red-100 text-red-700' },
         };
 
         const config = variants[status as keyof typeof variants] || { variant: 'outline' as const, icon: null, text: status, color: '' };
@@ -174,12 +176,12 @@ export default function VerificationShow({ submission }: Props) {
                         <div>
                             <div className="flex items-center gap-2">
                                 <h1 className="text-3xl font-bold tracking-tight">
-                                    Submission #{submission.id}
+                                    {t('nav.verifications')} #{submission.id}
                                 </h1>
                                 {getStatusBadge(submission.status)}
                             </div>
                             <p className="text-muted-foreground mt-1">
-                                Applicant: <span className="font-semibold text-foreground">{submission.user?.name}</span> • Submitted on {format(new Date(submission.created_at), 'PPP')}
+                                {t('auth.full_name')}: <span className="font-semibold text-foreground">{submission.user?.name}</span> • {t('success.status')} {format(new Date(submission.created_at), 'PPP')}
                             </p>
                         </div>
                     </div>
@@ -239,32 +241,32 @@ export default function VerificationShow({ submission }: Props) {
                                 <CardHeader className="bg-muted/30 border-b">
                                     <CardTitle className="text-lg flex items-center gap-2 font-bold">
                                         <User className="h-5 w-5 text-primary" />
-                                        Personal Information
+                                        {t('wizard.personal_info')}
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent className="p-6 space-y-4">
                                     <div className="grid grid-cols-2 gap-4">
                                         <div>
-                                            <Label className="text-muted-foreground text-xs uppercase font-bold">Full Name</Label>
+                                            <Label className="text-muted-foreground text-xs uppercase font-bold">{t('auth.full_name')}</Label>
                                             <p className="font-semibold text-lg">{submission.user?.name}</p>
                                         </div>
                                         <div>
-                                            <Label className="text-muted-foreground text-xs uppercase font-bold">Email</Label>
+                                            <Label className="text-muted-foreground text-xs uppercase font-bold">{t('auth.email')}</Label>
                                             <p className="font-medium text-sm text-blue-600 underline">{submission.user?.email}</p>
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-2 gap-4 pt-4 border-t border-dashed">
                                         <div>
-                                            <Label className="text-muted-foreground text-xs uppercase font-bold">ID Number</Label>
+                                            <Label className="text-muted-foreground text-xs uppercase font-bold">{t('wizard.id_number')}</Label>
                                             <p className="font-mono font-bold text-lg">{submission.id_number}</p>
                                         </div>
                                         <div>
-                                            <Label className="text-muted-foreground text-xs uppercase font-bold">Gender</Label>
-                                            <p className="font-medium capitalize">{submission.gender}</p>
+                                            <Label className="text-muted-foreground text-xs uppercase font-bold">{t('wizard.gender')}</Label>
+                                            <p className="font-medium capitalize">{t(`wizard.${submission.gender}`)}</p>
                                         </div>
                                     </div>
                                     <div>
-                                        <Label className="text-muted-foreground text-xs uppercase font-bold">Date of Birth</Label>
+                                        <Label className="text-muted-foreground text-xs uppercase font-bold">{t('wizard.dob')}</Label>
                                         <p className="font-medium">
                                             {format(new Date(submission.date_of_birth), 'MMM dd, yyyy')}
                                         </p>
@@ -277,25 +279,21 @@ export default function VerificationShow({ submission }: Props) {
                                 <CardHeader className="bg-muted/30 border-b">
                                     <CardTitle className="text-lg flex items-center gap-2 font-bold">
                                         <CreditCard className="h-5 w-5 text-primary" />
-                                        Contact & Payment
+                                        {t('wizard.stc_phone')}
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent className="p-6 space-y-4">
                                     <div>
-                                        <Label className="text-muted-foreground text-xs uppercase font-bold">STC Pay Phone</Label>
                                         <div className="flex items-center gap-2 mt-1">
-                                            <div className="bg-green-100 text-green-700 rounded-lg px-2 py-1 text-xs font-bold font-mono">
-                                                Saudi Arabia (+966)
-                                            </div>
                                             <p className="font-bold text-xl select-all tracking-wider">{submission.stc_phone}</p>
                                         </div>
                                     </div>
                                     <div className="pt-4 border-t border-dashed">
-                                        <Label className="text-muted-foreground text-xs uppercase font-bold">Vehicle Info</Label>
+                                        <Label className="text-muted-foreground text-xs uppercase font-bold">{t('wizard.vehicle')}</Label>
                                         <div className="flex items-center gap-3 mt-1">
                                             <Car className="h-8 w-8 text-primary/40" />
                                             <div>
-                                                <p className="text-xs text-muted-foreground">Sequence Number</p>
+                                                <p className="text-xs text-muted-foreground">{t('wizard.vehicle_sequence')}</p>
                                                 <p className="font-bold text-lg font-mono">{submission.vehicle_sequence_number}</p>
                                             </div>
                                         </div>
@@ -307,18 +305,18 @@ export default function VerificationShow({ submission }: Props) {
                         {/* Identity Documents Grid */}
                         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                             <DocumentCard
-                                title="National ID"
+                                title={t('wizard.id_front')}
                                 path={submission.id_front_path}
                                 icon={ClipboardCheck}
                             />
                             <DocumentCard
-                                title="Driver License"
+                                title={t('wizard.license_front')}
                                 path={submission.license_front_path}
                                 icon={ShieldCheck}
-                                footer={`Expires: ${format(new Date(submission.license_expiry), 'MMM yyyy')}`}
+                                footer={`${t('wizard.license_expiry')}: ${format(new Date(submission.license_expiry), 'MMM yyyy')}`}
                             />
                             <DocumentCard
-                                title="Registration"
+                                title={t('wizard.vehicle_registration')}
                                 path={submission.vehicle_registration_path}
                                 icon={FileText}
                             />
